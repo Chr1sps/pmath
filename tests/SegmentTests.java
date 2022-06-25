@@ -12,11 +12,6 @@ public class SegmentTests {
         point_4 = new Point(1.003, 1.996);
     }
 
-    @AfterClass
-    public static void cleanUp() {
-
-    }
-
     @Test
     public void testConstructorValid() throws Exception {
         Segment seg = new Segment(point_1, point_2);

@@ -13,11 +13,6 @@ public class PMathTests {
         b3 = new Point(2, 3);
     }
 
-    @AfterClass
-    public static void cleanUp() {
-
-    }
-
     @Test
     public void testDeterminant() throws Exception {
         Assert.assertEquals(6.0, PMath.determinant(a2, a1, b1), 0.0);

@@ -1,15 +1,6 @@
 import org.junit.*;
 
 public class PointTests {
-    @BeforeClass
-    public static void setUp() {
-        // Point point = new Point(1.0, 2.0);
-    }
-
-    @AfterClass
-    public static void cleanUp() {
-
-    }
 
     @Test
     public void testConstructor() {
