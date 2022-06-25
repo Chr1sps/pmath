@@ -1,6 +1,6 @@
 public class PMath {
     public static double determinant(Point a, Point b, Point c) {
-        return ((a.getX() - c.getX()) * (b.getX() - c.getX())) * ((b.getX() - c.getX()) * (a.getX() - c.getX()));
+        return ((a.getX() - c.getX()) * (b.getY() - a.getY())) - ((a.getX() - b.getX()) * (c.getY() - a.getY()));
     }
 
     public static double determinant(Point p, Segment s) {

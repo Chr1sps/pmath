@@ -1,41 +1,41 @@
 public class Segment {
-    private Point a, b;
+    private Point _a, _b;
 
-    Segment(Point x, Point y) throws Exception {
-        if (x.equals(y)) {
+    Segment(Point a, Point b) throws Exception {
+        if (a.equals(b)) {
             throw new Exception("Points must differ.");
         }
-        a = x;
-        b = y;
+        _a = a;
+        _b = b;
     }
 
     Segment(Segment other) {
-        a = other.a;
-        b = other.b;
+        _a = other._a;
+        _b = other._b;
     }
 
     public Point getA() {
-        return a;
+        return _a;
     }
 
     public Point getB() {
-        return b;
+        return _b;
     }
 
-    public void setA(Point p) throws Exception {
-        if (p.equals(b))
+    public void setA(Point a) throws Exception {
+        if (a.equals(_b))
             throw new Exception("New point A must differ from point B.");
-        a = p;
+        _a = a;
     }
 
-    public void setB(Point p) throws Exception {
-        if (p.equals(a))
+    public void setB(Point b) throws Exception {
+        if (b.equals(_a))
             throw new Exception("New point B must differ from point A.");
-        b = p;
+        _b = b;
     }
 
     public double getLength() {
-        double delta_x = b.getX() - a.getX(), delta_y = b.getY() - a.getY();
+        double delta_x = _b.getX() - _a.getX(), delta_y = _b.getY() - _a.getY();
         double result = Math.sqrt(delta_x * delta_x + delta_y * delta_y);
         return result;
     }

@@ -1,39 +1,39 @@
 public class Point {
-    private double x, y;
+    private double _x, _y;
 
-    Point(double a, double b) {
-        x = a;
-        y = b;
+    Point(double x, double y) {
+        _x = x;
+        _y = y;
     }
 
     Point(Point other) {
-        x = other.x;
-        y = other.y;
+        _x = other._x;
+        _y = other._y;
     }
 
     public double getX() {
-        return x;
+        return _x;
     }
 
     public double getY() {
-        return y;
+        return _y;
     }
 
-    public void setX(double a) {
-        x = a;
+    public void setX(double x) {
+        _x = x;
     }
 
-    public void setY(double a) {
-        y = a;
+    public void setY(double y) {
+        _y = y;
     }
 
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        Double temp = x;
+        Double temp = _x;
         result = prime * result + temp.hashCode();
-        temp = y;
+        temp = _y;
         result = prime * result + temp.hashCode();
         return result;
     }
@@ -47,9 +47,9 @@ public class Point {
         if (getClass() != obj.getClass())
             return false;
         Point other = (Point) obj;
-        if (x != other.x)
+        if (_x != other._x)
             return false;
-        if (y != other.y)
+        if (_y != other._y)
             return false;
         return true;
     }

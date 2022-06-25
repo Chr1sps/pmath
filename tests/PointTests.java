@@ -14,15 +14,15 @@ public class PointTests {
     @Test
     public void testConstructor() {
         Point point = new Point(1.0, 2.0);
-        Assert.assertEquals(point.getX(), 1.0, 0.0);
-        Assert.assertEquals(point.getY(), 2.0, 0.0);
+        Assert.assertEquals(1.0, point.getX(), 0.0);
+        Assert.assertEquals(2.0, point.getY(), 0.0);
     }
 
     @Test
     public void testCopyingConstructor() {
         Point point_1 = new Point(1.0, 2.0), point_2 = new Point(point_1);
-        Assert.assertEquals(point_2.getX(), 1.0, 0.0);
-        Assert.assertEquals(point_2.getY(), 2.0, 0.0);
+        Assert.assertEquals(1.0, point_2.getX(), 0.0);
+        Assert.assertEquals(2.0, point_2.getY(), 0.0);
     }
 
     @Test
@@ -30,8 +30,8 @@ public class PointTests {
         Point point = new Point(1.0, 2.0);
         point.setX(0.0);
         point.setY(-1.0);
-        Assert.assertEquals(point.getX(), 0.0, 0.0);
-        Assert.assertEquals(point.getY(), -1.0, 0.0);
+        Assert.assertEquals(0.0, point.getX(), 0.0);
+        Assert.assertEquals(-1.0, point.getY(), 0.0);
     }
 
     @Test

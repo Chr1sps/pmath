@@ -20,10 +20,10 @@ public class SegmentTests {
     @Test
     public void testConstructorValid() throws Exception {
         Segment seg = new Segment(point_1, point_2);
-        Assert.assertEquals(seg.getA().getX(), 1.0, 0.0);
-        Assert.assertEquals(seg.getA().getY(), 2.0, 0.0);
-        Assert.assertEquals(seg.getB().getX(), 4.0, 0.0);
-        Assert.assertEquals(seg.getB().getY(), -2.0, 0.0);
+        Assert.assertEquals(1.0, seg.getA().getX(), 0.0);
+        Assert.assertEquals(2.0, seg.getA().getY(), 0.0);
+        Assert.assertEquals(4.0, seg.getB().getX(), 0.0);
+        Assert.assertEquals(-2.0, seg.getB().getY(), 0.0);
 
     }
 
@@ -36,8 +36,8 @@ public class SegmentTests {
     public void testSettersValid() throws Exception {
         Segment seg = new Segment(point_1, point_2);
         seg.setB(point_3);
-        Assert.assertEquals(seg.getB().getX(), 0.0, 0.0);
-        Assert.assertEquals(seg.getB().getY(), 2.0, 0.0);
+        Assert.assertEquals(0.0, seg.getB().getX(), 0.0);
+        Assert.assertEquals(2.0, seg.getB().getY(), 0.0);
     }
 
     @Test(expected = Exception.class)
@@ -49,18 +49,18 @@ public class SegmentTests {
     @Test
     public void testGetLengthOneDimension() throws Exception {
         Segment seg = new Segment(point_1, point_3);
-        Assert.assertEquals(seg.getLength(), 1.0, 0.0 /* 1e-15 */);
+        Assert.assertEquals(1.0, seg.getLength(), 0.0 /* 1e-15 */);
     }
 
     @Test
     public void testGetLengthTwoDimensions() throws Exception {
         Segment seg = new Segment(point_1, point_2);
-        Assert.assertEquals(seg.getLength(), 5.0, 0.0 /* 1e-15 */);
+        Assert.assertEquals(5.0, seg.getLength(), 0.0 /* 1e-15 */);
     }
 
     @Test
     public void testGetLengthRounding() throws Exception {
         Segment seg = new Segment(point_1, point_4);
-        Assert.assertEquals(seg.getLength(), 0.005, 1e-15);
+        Assert.assertEquals(0.005, seg.getLength(), 1e-15);
     }
 }
