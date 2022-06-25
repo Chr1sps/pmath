@@ -26,10 +26,10 @@ public class PMath {
                 det_2 = determinant(other.getA(), first) * determinant(other.getB(), first);
         if (det_1 < 0 && det_2 < 0)
             return true;
-        else if (det_1 < 0 && det_2 == 0) {
+        else if (det_1 == 0 && det_2 < 0) {
             if (isAdherent(first.getA(), other) || isAdherent(first.getB(), other))
                 return true;
-        } else if (det_1 == 0 && det_2 < 0) {
+        } else if (det_1 < 0 && det_2 == 0) {
             if (isAdherent(other.getA(), first) || isAdherent(other.getB(), first))
                 return true;
         } else if (det_1 == 0 && det_2 == 0) {
