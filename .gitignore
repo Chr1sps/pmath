@@ -1,0 +1,8 @@
+# Compiled class files
+bin/
+
+# Log files
+*.log
+
+# .vscode files
+.vscode/
