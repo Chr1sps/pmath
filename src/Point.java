@@ -1,4 +1,4 @@
-public class Point {
+public class Point implements Cloneable {
     private double _x, _y;
 
     Point(double x, double y) {
@@ -52,6 +52,13 @@ public class Point {
         if (_y != other._y)
             return false;
         return true;
+    }
+
+    public Object clone() throws CloneNotSupportedException {
+        Point cloned = (Point) super.clone();
+        cloned._x = this._x;
+        cloned._y = this._y;
+        return cloned;
     }
 
 }

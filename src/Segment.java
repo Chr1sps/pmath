@@ -1,4 +1,4 @@
-public class Segment {
+public class Segment implements Cloneable {
     private Point _a, _b;
 
     Segment(Point a, Point b) throws Exception {
@@ -38,5 +38,12 @@ public class Segment {
         double delta_x = _b.getX() - _a.getX(), delta_y = _b.getY() - _a.getY();
         double result = Math.sqrt(delta_x * delta_x + delta_y * delta_y);
         return result;
+    }
+
+    public Object clone() throws CloneNotSupportedException {
+        Segment cloned = (Segment) super.clone();
+        cloned._a = (Point) _a.clone();
+        cloned._b = (Point) _b.clone();
+        return cloned;
     }
 }
