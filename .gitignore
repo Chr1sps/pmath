@@ -3,6 +3,3 @@ bin/
 
 # Log files
 *.log
-
-# .vscode files
-.vscode/
