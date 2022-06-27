@@ -1,9 +1,9 @@
 public class Segment implements Cloneable {
     private Point _a, _b;
 
-    Segment(Point a, Point b) throws Exception {
+    Segment(Point a, Point b) throws IdenticalVerticesException {
         if (a.equals(b)) {
-            throw new Exception("Points must differ.");
+            throw new IdenticalVerticesException("Points must differ.");
         }
         _a = new Point(a);
         _b = new Point(b);
@@ -22,15 +22,15 @@ public class Segment implements Cloneable {
         return new Point(_b);
     }
 
-    public void setA(Point a) throws Exception {
+    public void setA(Point a) throws IdenticalVerticesException {
         if (a.equals(_b))
-            throw new Exception("New point A must differ from point B.");
+            throw new IdenticalVerticesException("New point A must differ from point B.");
         _a = new Point(a);
     }
 
-    public void setB(Point b) throws Exception {
+    public void setB(Point b) throws IdenticalVerticesException {
         if (b.equals(_a))
-            throw new Exception("New point B must differ from point A.");
+            throw new IdenticalVerticesException("New point B must differ from point A.");
         _b = new Point(b);
     }
 

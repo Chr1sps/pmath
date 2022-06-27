@@ -13,7 +13,7 @@ public class SegmentTests {
     }
 
     @Test
-    public void testConstructorValid() throws Exception {
+    public void testConstructorValid() throws IdenticalVerticesException {
         Segment seg = new Segment(point_1, point_2);
         Assert.assertEquals(1.0, seg.getA().getX(), 0.0);
         Assert.assertEquals(2.0, seg.getA().getY(), 0.0);
@@ -22,39 +22,39 @@ public class SegmentTests {
 
     }
 
-    @Test(expected = Exception.class)
-    public void testConstructorException() throws Exception {
+    @Test(expected = IdenticalVerticesException.class)
+    public void testConstructorException() throws IdenticalVerticesException {
         new Segment(point_2, point_2_2);
     }
 
     @Test
-    public void testSettersValid() throws Exception {
+    public void testSettersValid() throws IdenticalVerticesException {
         Segment seg = new Segment(point_1, point_2);
         seg.setB(point_3);
         Assert.assertEquals(0.0, seg.getB().getX(), 0.0);
         Assert.assertEquals(2.0, seg.getB().getY(), 0.0);
     }
 
-    @Test(expected = Exception.class)
-    public void testSettersException() throws Exception {
+    @Test(expected = IdenticalVerticesException.class)
+    public void testSettersException() throws IdenticalVerticesException {
         Segment seg = new Segment(point_1, point_2);
         seg.setA(point_2_2);
     }
 
     @Test
-    public void testGetLengthOneDimension() throws Exception {
+    public void testGetLengthOneDimension() throws IdenticalVerticesException {
         Segment seg = new Segment(point_1, point_3);
         Assert.assertEquals(1.0, seg.getLength(), 0.0 /* 1e-15 */);
     }
 
     @Test
-    public void testGetLengthTwoDimensions() throws Exception {
+    public void testGetLengthTwoDimensions() throws IdenticalVerticesException {
         Segment seg = new Segment(point_1, point_2);
         Assert.assertEquals(5.0, seg.getLength(), 0.0 /* 1e-15 */);
     }
 
     @Test
-    public void testGetLengthRounding() throws Exception {
+    public void testGetLengthRounding() throws IdenticalVerticesException {
         Segment seg = new Segment(point_1, point_4);
         Assert.assertEquals(0.005, seg.getLength(), 1e-15);
     }
