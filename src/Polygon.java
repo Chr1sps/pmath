@@ -127,12 +127,25 @@ public class Polygon implements Cloneable {
         return sides;
     }
 
-    // TODO: isConcave
-    /*
-     * public boolean isConcave() {
-     * return false;
-     * }
-     */
+    public boolean isConcave() {
+        if (_vertices.size() > 3) {
+            Point pprev = new Point(_vertices.get(_vertices.size() - 2)),
+                    prev = new Point(_vertices.get(_vertices.size() - 1));
+            boolean more_than;
+            if (_determinant(_vertices.get(0), prev, pprev) > 0)
+                more_than = true;
+            else
+                more_than = false;
+            for (int i = 1; i < _vertices.size(); ++i) {
+                if (!(_determinant(_vertices.get(i), prev, pprev) < 0 ^ more_than))
+                    return true;
+                pprev = prev;
+                prev = _vertices.get(i);
+            }
+        }
+        return false;
+
+    }
 
     @SuppressWarnings("unchecked")
     public Object clone() throws CloneNotSupportedException {

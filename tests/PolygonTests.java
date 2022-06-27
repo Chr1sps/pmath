@@ -78,4 +78,24 @@ public class PolygonTests {
         result = poly.getSides();
         result.equals(edges);
     }
+
+    @Test
+    public void testIsConcaveFalse() throws Exception {
+        Point[] arr = { point_1, point_2, point_3, point_4 };
+        for (Point i : arr) {
+            vertices.add(i);
+        }
+        Polygon poly = new Polygon(vertices);
+        Assert.assertFalse(poly.isConcave());
+    }
+
+    @Test
+    public void testIsConcaveTrue() throws Exception {
+        Point[] arr = { point_1, point_2, point_3, point_4, point_5 };
+        for (Point i : arr) {
+            vertices.add(i);
+        }
+        Polygon poly = new Polygon(vertices);
+        Assert.assertTrue(poly.isConcave());
+    }
 }
