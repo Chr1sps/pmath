@@ -15,11 +15,11 @@ public class Segment implements Cloneable {
     }
 
     public Point getA() {
-        return _a;
+        return new Point(_a);
     }
 
     public Point getB() {
-        return _b;
+        return new Point(_b);
     }
 
     public void setA(Point a) throws Exception {
