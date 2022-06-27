@@ -26,6 +26,16 @@ public class PolygonTests {
 
     }
 
+    @Test
+    public void testCopyingConstructor() throws Exception {
+        Point[] arr = { point_1, point_2, point_3, point_4 };
+        for (Point i : arr) {
+            vertices.add(i);
+        }
+        Polygon poly = new Polygon(vertices), poly_new = new Polygon(poly);
+        Assert.assertEquals(4, poly_new.size());
+    }
+
     @Test(expected = InsufficientVerticesException.class)
     public void testInitInsufficientVerticesException() throws Exception {
         Point[] arr = { point_1, point_2 };
@@ -97,5 +107,32 @@ public class PolygonTests {
         }
         Polygon poly = new Polygon(vertices);
         Assert.assertTrue(poly.isConcave());
+    }
+
+    @Test
+    public void testClone() throws Exception {
+        Point[] arr = { point_1, point_2, point_3, point_4 };
+        for (Point i : arr) {
+            vertices.add(i);
+        }
+        Polygon poly = new Polygon(vertices), poly_new = (Polygon) poly.clone();
+        Assert.assertEquals(4, poly_new.size());
+    }
+
+    @Test
+    public void testHashCode() throws Exception {
+        Point[] arr_1 = { point_1, point_2, point_3 }, arr_2 = { point_1, point_2, point_4 };
+        Polygon poly_1 = new Polygon(arr_1), poly_2 = new Polygon(arr_2);
+        Assert.assertNotEquals(poly_1.hashCode(), poly_2.hashCode());
+    }
+
+    @Test
+    public void testEquals() throws Exception {
+        Point[] arr = { point_1, point_2, point_3, point_4 };
+        for (Point i : arr) {
+            vertices.add(i);
+        }
+        Polygon poly_1 = new Polygon(vertices), poly_2 = new Polygon(vertices);
+        Assert.assertTrue(poly_1.equals(poly_2));
     }
 }

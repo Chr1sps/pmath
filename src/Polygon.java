@@ -105,6 +105,11 @@ public class Polygon implements Cloneable {
 
     }
 
+    @SuppressWarnings("unchecked")
+    Polygon(Polygon other) {
+        _vertices = (ArrayList<Point>) other._vertices.clone();
+    }
+
     public int size() {
         return _vertices.size();
     }
@@ -152,5 +157,29 @@ public class Polygon implements Cloneable {
         Polygon cloned = (Polygon) super.clone();
         cloned._vertices = (ArrayList<Point>) _vertices.clone();
         return cloned;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        for (Point vertex : _vertices) {
+            result = prime * result + vertex.hashCode();
+        }
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Polygon other = (Polygon) obj;
+        if (_vertices.equals(other._vertices))
+            return true;
+        return false;
     }
 }
