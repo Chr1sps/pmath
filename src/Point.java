@@ -61,4 +61,7 @@ public class Point implements Cloneable {
         return cloned;
     }
 
+    public String toString() {
+        return String.format("(%.4f, %.4f)", _x, _y);
+    }
 }

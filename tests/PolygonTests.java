@@ -135,4 +135,12 @@ public class PolygonTests {
         Polygon poly_1 = new Polygon(vertices), poly_2 = new Polygon(vertices);
         Assert.assertTrue(poly_1.equals(poly_2));
     }
+
+    @Test
+    public void testToString() throws Exception {
+        Point[] arr = { point_1, point_2, point_3, point_4 };
+        Polygon poly = new Polygon(arr);
+        Assert.assertEquals(">-(0.0000, 0.0000)-(0.0000, 1.0000)-(1.0000, 1.0000)-(1.0000, 0.0000)->",
+                poly.toString());
+    }
 }

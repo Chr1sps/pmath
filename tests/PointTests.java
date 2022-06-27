@@ -41,4 +41,10 @@ public class PointTests {
         Assert.assertNotEquals(hash_1, hash_3);
         Assert.assertNotEquals(hash_2, hash_3);
     }
+
+    @Test
+    public void testToString() {
+        Point point = new Point(1.0, 2.0);
+        Assert.assertEquals("(1.0000, 2.0000)", point.toString());
+    }
 }

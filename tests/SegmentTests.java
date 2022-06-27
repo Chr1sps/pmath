@@ -58,4 +58,10 @@ public class SegmentTests {
         Segment seg = new Segment(point_1, point_4);
         Assert.assertEquals(0.005, seg.getLength(), 1e-15);
     }
+
+    @Test
+    public void testToString() throws Exception {
+        Segment seg = new Segment(point_1, point_2);
+        Assert.assertEquals("(1.0000, 2.0000)-(4.0000, -2.0000)", seg.toString());
+    }
 }

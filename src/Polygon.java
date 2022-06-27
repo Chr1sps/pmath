@@ -182,4 +182,13 @@ public class Polygon implements Cloneable {
             return true;
         return false;
     }
+
+    public String toString() {
+        String result = ">-";
+        for (Point vertex : _vertices) {
+            result += vertex.toString() + '-';
+        }
+        result += ">";
+        return result;
+    }
 }

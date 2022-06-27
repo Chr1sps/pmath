@@ -3,3 +3,6 @@ bin/
 
 # Log files
 *.log
+
+# main method file
+src/Main.java

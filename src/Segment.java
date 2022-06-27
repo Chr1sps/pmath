@@ -46,4 +46,8 @@ public class Segment implements Cloneable {
         cloned._b = (Point) _b.clone();
         return cloned;
     }
+
+    public String toString() {
+        return _a.toString() + '-' + _b.toString();
+    }
 }
