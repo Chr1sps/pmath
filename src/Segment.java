@@ -50,4 +50,29 @@ public class Segment implements Cloneable {
     public String toString() {
         return _a.toString() + '-' + _b.toString();
     }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + _a.hashCode();
+        result = prime * result + _b.hashCode();
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Segment other = (Segment) obj;
+        if (!_a.equals(other._a))
+            return false;
+        if (!_b.equals(other._b))
+            return false;
+        return true;
+    }
 }

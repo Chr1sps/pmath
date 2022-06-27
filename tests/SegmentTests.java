@@ -64,4 +64,29 @@ public class SegmentTests {
         Segment seg = new Segment(point_1, point_2);
         Assert.assertEquals("(1.0000, 2.0000)-(4.0000, -2.0000)", seg.toString());
     }
+
+    @Test
+    public void testEquals() throws Exception {
+        Segment seg_1 = new Segment(point_1, point_2), seg_2 = new Segment(point_1, point_2),
+                seg_3 = new Segment(point_1, point_3);
+        Assert.assertTrue(seg_1.equals(seg_2));
+        Assert.assertFalse(seg_1.equals(seg_3));
+        Assert.assertFalse(seg_2.equals(seg_3));
+    }
+
+    @Test
+    public void testHashCode() throws Exception {
+        Segment seg_1 = new Segment(point_1, point_2), seg_2 = new Segment(point_1, point_2),
+                seg_3 = new Segment(point_1, point_3);
+        Assert.assertTrue(seg_1.hashCode() == seg_2.hashCode());
+        Assert.assertFalse(seg_1.hashCode() == seg_3.hashCode());
+        Assert.assertFalse(seg_2.hashCode() == seg_3.hashCode());
+    }
+
+    @Test
+    public void testClone() throws Exception {
+        Segment seg = new Segment(point_1, point_2), cloned = (Segment) seg.clone();
+        Assert.assertEquals(seg, cloned);
+        Assert.assertFalse(seg == cloned);
+    }
 }

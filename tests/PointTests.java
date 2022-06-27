@@ -47,4 +47,10 @@ public class PointTests {
         Point point = new Point(1.0, 2.0);
         Assert.assertEquals("(1.0000, 2.0000)", point.toString());
     }
+
+    @Test
+    public void testClone() throws Exception {
+        Point point = new Point(1, 2), cloned = (Point) point.clone();
+        Assert.assertEquals(point, cloned);
+    }
 }
