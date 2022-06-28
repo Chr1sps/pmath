@@ -1,4 +1,7 @@
 import org.junit.*;
+import PMath.shapes.Point;
+import PMath.shapes.Segment;
+import PMath.exceptions.*;
 
 public class SegmentTests {
     private static Point point_1, point_2, point_2_2, point_3, point_4;

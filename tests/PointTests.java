@@ -1,5 +1,7 @@
 import org.junit.*;
 
+import PMath.shapes.Point;
+
 public class PointTests {
 
     @Test

@@ -1,6 +1,9 @@
 import java.util.ArrayList;
 import org.junit.*;
 
+import PMath.shapes.*;
+import PMath.exceptions.*;
+
 public class PolygonTests {
     private static Point point_1, point_2, point_3, point_4, point_5;
     private static ArrayList<Point> vertices;

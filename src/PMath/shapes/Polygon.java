@@ -1,4 +1,11 @@
+package PMath.shapes;
+
 import java.util.ArrayList;
+
+import PMath.exceptions.ColinearVerticesException;
+import PMath.exceptions.IdenticalVerticesException;
+import PMath.exceptions.InsufficientVerticesException;
+import PMath.exceptions.IntersectingEdgesException;
 
 public class Polygon implements Cloneable {
     private ArrayList<Point> _vertices;
@@ -44,7 +51,7 @@ public class Polygon implements Cloneable {
         return false;
     }
 
-    Polygon(Point[] vertices)
+    public Polygon(Point[] vertices)
             throws InsufficientVerticesException,
             ColinearVerticesException,
             IdenticalVerticesException,
@@ -96,7 +103,7 @@ public class Polygon implements Cloneable {
         }
     }
 
-    Polygon(ArrayList<Point> vertices)
+    public Polygon(ArrayList<Point> vertices)
             throws InsufficientVerticesException,
             ColinearVerticesException,
             IdenticalVerticesException,
@@ -106,7 +113,7 @@ public class Polygon implements Cloneable {
     }
 
     @SuppressWarnings("unchecked")
-    Polygon(Polygon other) {
+    public Polygon(Polygon other) {
         _vertices = (ArrayList<Point>) other._vertices.clone();
     }
 

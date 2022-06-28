@@ -1,11 +1,13 @@
 {
     "java.project.sourcePaths": [
-        "tests",
         "src",
-        "src/exceptions"
+        "tests"
     ],
     "java.project.outputPath": "bin",
     "java.project.referencedLibraries": [
         "lib/**/*.jar"
-    ]
+    ],
+    "java.debug.settings.showToString": true,
+    "java.debug.settings.showQualifiedNames": false,
+    "java.project.exportJar.targetPath": "jar/PMath.jar",
 }

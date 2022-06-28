@@ -1,12 +1,14 @@
+package PMath.shapes;
+
 public class Point implements Cloneable {
     private double _x, _y;
 
-    Point(double x, double y) {
+    public Point(double x, double y) {
         _x = x;
         _y = y;
     }
 
-    Point(Point other) {
+    public Point(Point other) {
         _x = other._x;
         _y = other._y;
     }

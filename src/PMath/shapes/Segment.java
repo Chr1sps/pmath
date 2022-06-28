@@ -1,7 +1,11 @@
+package PMath.shapes;
+
+import PMath.exceptions.IdenticalVerticesException;
+
 public class Segment implements Cloneable {
     private Point _a, _b;
 
-    Segment(Point a, Point b) throws IdenticalVerticesException {
+    public Segment(Point a, Point b) throws IdenticalVerticesException {
         if (a.equals(b)) {
             throw new IdenticalVerticesException("Points must differ.");
         }
@@ -9,7 +13,7 @@ public class Segment implements Cloneable {
         _b = new Point(b);
     }
 
-    Segment(Segment other) {
+    public Segment(Segment other) {
         _a = new Point(other._a);
         _b = new Point(other._b);
     }
