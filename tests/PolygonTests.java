@@ -130,7 +130,7 @@ public class PolygonTests {
     }
 
     @Test
-    public void testEquals() throws Exception {
+    public void testEqualsTrue() throws Exception {
         Point[] arr = { point_1, point_2, point_3, point_4 };
         for (Point i : arr) {
             vertices.add(i);
@@ -140,10 +140,31 @@ public class PolygonTests {
     }
 
     @Test
+    public void testEqualsFalse() throws Exception {
+        Point[] arr_1 = { point_1, point_2, point_3 }, arr_2 = { point_1, point_2, point_4 };
+        Polygon poly_1 = new Polygon(arr_1), poly_2 = new Polygon(arr_2);
+        Assert.assertFalse(poly_1.equals(poly_2));
+    }
+
+    @Test
+    public void testEqualsDifferentOrder() throws Exception {
+        Point[] arr_1 = { point_1, point_2, point_3, point_4 }, arr_2 = { point_2, point_3, point_4, point_1 };
+        Polygon poly_1 = new Polygon(arr_1), poly_2 = new Polygon(arr_2);
+        Assert.assertTrue(poly_1.equals(poly_2));
+    }
+
+    @Test
+    public void testEqualsReversedOrder() throws Exception {
+        Point[] arr_1 = { point_1, point_2, point_3, point_4 }, arr_2 = { point_1, point_4, point_3, point_2 };
+        Polygon poly_1 = new Polygon(arr_1), poly_2 = new Polygon(arr_2);
+        Assert.assertTrue(poly_1.equals(poly_2));
+    }
+
+    @Test
     public void testToString() throws Exception {
         Point[] arr = { point_1, point_2, point_3, point_4 };
         Polygon poly = new Polygon(arr);
-        Assert.assertEquals("0: (0.0000, 0.0000)\n1: (0.0000, 1.0000)\n2: (1.0000, 1.0000)\n3: (1.0000, 0.0000)",
+        Assert.assertEquals("0: (0.0000, 0.0000)\n1: (1.0000, 0.0000)\n2: (1.0000, 1.0000)\n3: (0.0000, 1.0000)",
                 poly.toString());
     }
 }

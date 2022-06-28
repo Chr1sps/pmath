@@ -11,6 +11,41 @@ import PMath.utils;
 public class Polygon implements Cloneable {
     private ArrayList<Point> _vertices;
 
+    private boolean _lessThan(Point first, Point other) {
+        return (first.getX() < other.getX()) || (first.getX() == other.getX() && first.getY() < other.getY());
+    }
+
+    private void _shiftReverseAndAssign(Point[] list) {
+        _vertices = new ArrayList<Point>();
+        for (Point vertex : list) {
+            _vertices.add(vertex);
+        }
+        Point smallest = _vertices.get(0), temp;
+
+        // finding the lexicografically smallest Point
+        for (Point vertex : _vertices) {
+            if (_lessThan(vertex, smallest)) {
+                smallest = vertex;
+            }
+        }
+
+        // shifting the list so that the smallest object is at the beginning
+        while (_vertices.indexOf(smallest) != 0) {
+            temp = _vertices.remove(0);
+            _vertices.add(temp);
+        }
+
+        // reversing the list if the determinant of the first three points is smaller
+        // than zero
+        if (utils.determinant(_vertices.get(0), _vertices.get(1), _vertices.get(2)) < 0) {
+            ArrayList<Point> temp_list = new ArrayList<Point>();
+            while (_vertices.size() != 1) {
+                temp_list.add(_vertices.remove(_vertices.size() - 1));
+            }
+            _vertices.addAll(temp_list);
+        }
+    }
+
     public Polygon(Point[] vertices)
             throws InsufficientVerticesException,
             ColinearVerticesException,
@@ -57,10 +92,7 @@ public class Polygon implements Cloneable {
         }
 
         // vertex assignment
-        _vertices = new ArrayList<Point>();
-        for (Point vertex : vertices) {
-            _vertices.add(new Point(vertex));
-        }
+        _shiftReverseAndAssign(vertices);
     }
 
     public Polygon(ArrayList<Point> vertices)
