@@ -1,6 +1,7 @@
 package PMath.shapes;
 
 import PMath.exceptions.IdenticalVerticesException;
+import PMath.utils;
 
 public class Segment implements Cloneable {
     private Point _a, _b;
@@ -42,6 +43,38 @@ public class Segment implements Cloneable {
         double delta_x = _b.getX() - _a.getX(), delta_y = _b.getY() - _a.getY();
         double result = Math.sqrt(delta_x * delta_x + delta_y * delta_y);
         return result;
+    }
+
+    public boolean isAdherent(Point p) {
+        if (utils.determinant(p, this) == 0.0) {
+            if (_b.getX() - _a.getX() == 0.0) {
+                if (p.getY() >= Math.min(_a.getY(), _b.getY()) && p.getY() <= Math.max(_a.getY(), _b.getY()))
+                    return true;
+            } else {
+                if (p.getX() >= Math.min(_a.getX(), _b.getX()) && p.getX() <= Math.max(_a.getX(), _b.getX()))
+                    return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean isIntersected(Segment other) {
+        double det_1 = utils.determinant(_a, other) * utils.determinant(_b, other),
+                det_2 = utils.determinant(other._a, this) * utils.determinant(other._b, this);
+        if (det_1 < 0 && det_2 < 0)
+            return true;
+        else if (det_1 == 0 && det_2 < 0) {
+            if (other.isAdherent(_a) || other.isAdherent(_b))
+                return true;
+        } else if (det_1 < 0 && det_2 == 0) {
+            if (isAdherent(other._a) || isAdherent(other._b))
+                return true;
+        } else if (det_1 == 0 && det_2 == 0) {
+            if ((other.isAdherent(_a) || other.isAdherent(_b))
+                    && (isAdherent(other._a) || isAdherent(other._b)))
+                return true;
+        }
+        return false;
     }
 
     public Object clone() throws CloneNotSupportedException {

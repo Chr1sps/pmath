@@ -23,25 +23,4 @@ public class PMathTests {
         Assert.assertEquals(-2.0, PMath.utils.determinant(b2, new Segment(b3, a2)), 0.0);
         Assert.assertEquals(0.0, PMath.utils.determinant(a3, new Segment(a1, b1)), 0.0);
     }
-
-    @Test
-    public void testAdherence() throws Exception {
-        Segment seg = new Segment(a1, b1);
-        Assert.assertTrue(PMath.utils.isAdherent(b3, seg));
-        Assert.assertFalse(PMath.utils.isAdherent(a3, seg));
-        Assert.assertTrue(PMath.utils.isAdherent(a1, seg));
-    }
-
-    @Test
-    public void testIntersecting() throws Exception {
-        Segment seg1 = new Segment(a1, b1),
-                seg2 = new Segment(a2, b2),
-                seg3 = new Segment(a3, b3),
-                seg4 = new Segment(a2, b3);
-        Assert.assertTrue(PMath.utils.areIntersected(seg1, seg2));
-        Assert.assertTrue(PMath.utils.areIntersected(seg1, seg3));
-        Assert.assertFalse(PMath.utils.areIntersected(seg2, seg3));
-        Assert.assertTrue(PMath.utils.areIntersected(seg3, seg4));
-        Assert.assertTrue(PMath.utils.areIntersected(seg1, seg4));
-    }
 }

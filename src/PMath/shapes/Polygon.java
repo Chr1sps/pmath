@@ -85,7 +85,7 @@ public class Polygon implements Cloneable {
                 offset = 0;
 
             for (int j = i + 2; j < sides.size() - offset; ++j) {
-                if (utils.areIntersected(sides.get(i), sides.get(j)))
+                if (sides.get(i).isIntersected(sides.get(j)))
                     throw new IntersectingEdgesException("No two edges shall intersect with each other.");
 
             }
