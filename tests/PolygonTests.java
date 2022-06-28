@@ -113,6 +113,48 @@ public class PolygonTests {
     }
 
     @Test
+    public void testIsInsideTrue() throws Exception {
+        Point[] arr = { point_1, point_2, point_3, point_4 };
+        Polygon poly = new Polygon(arr);
+        Assert.assertTrue(poly.isInside(point_5));
+    }
+
+    @Test
+    public void testIsInsidePolygonVertex() throws Exception {
+        Point[] arr = { point_1, point_2, point_3, point_4 };
+        Polygon poly = new Polygon(arr);
+        Assert.assertTrue(poly.isInside(point_1));
+    }
+
+    @Test
+    public void testIsInsideEdge() throws Exception {
+        Point[] arr = { point_1, point_2, point_3 };
+        Polygon poly = new Polygon(arr);
+        Assert.assertTrue(poly.isInside(point_5));
+    }
+
+    @Test
+    public void testIsInsideFalse() throws Exception {
+        Point[] arr = { point_1, point_2, point_3 };
+        Polygon poly = new Polygon(arr);
+        Assert.assertFalse(poly.isInside(point_4));
+    }
+
+    @Test
+    public void testIsInsideFalseEdgeExtension() throws Exception {
+        Point[] arr = { point_1, point_5, point_2 };
+        Polygon poly = new Polygon(arr);
+        Assert.assertFalse(poly.isInside(point_3));
+    }
+
+    @Test(expected = ConcavePolygonException.class)
+    public void testIsInsideException() throws Exception {
+        Point[] arr = { point_1, point_2, point_3, point_4, point_5 };
+        Polygon poly = new Polygon(arr);
+        poly.isInside(point_1);
+    }
+
+    @Test
     public void testClone() throws Exception {
         Point[] arr = { point_1, point_2, point_3, point_4 };
         for (Point i : arr) {

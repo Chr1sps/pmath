@@ -3,6 +3,7 @@ package PMath.shapes;
 import java.util.ArrayList;
 
 import PMath.exceptions.ColinearVerticesException;
+import PMath.exceptions.ConcavePolygonException;
 import PMath.exceptions.IdenticalVerticesException;
 import PMath.exceptions.InsufficientVerticesException;
 import PMath.exceptions.IntersectingEdgesException;
@@ -149,6 +150,32 @@ public class Polygon implements Cloneable {
         }
         return false;
 
+    }
+
+    public boolean isInside(Point point) throws ConcavePolygonException, IdenticalVerticesException {
+        if (isConcave())
+            throw new ConcavePolygonException("A polygon must be convex to use this algorithm.");
+        int p = 0, k = _vertices.size() - 2, s = k / 2;
+        for (; k - p != 1; s = (k + p) / 2) {
+            if (utils.determinant(_vertices.get(_vertices.size() - 1), _vertices.get(s), point) * utils.determinant(
+                    _vertices.get(_vertices.size() - 1), _vertices.get(s), _vertices.get(_vertices.size() - 2)) > 0)
+                p = s;
+            else
+                k = s;
+        }
+        Segment[] sides = { new Segment(_vertices.get(_vertices.size() - 1), _vertices.get(p)),
+                new Segment(_vertices.get(p), _vertices.get(k)),
+                new Segment(_vertices.get(k), _vertices.get(_vertices.size() - 1)) };
+        int sum_det = 0;
+        for (Segment side : sides) {
+            if (side.isAdherent(point))
+                return true;
+            else if ((utils.determinant(point, side)) > 0)
+                ++sum_det;
+            else
+                --sum_det;
+        }
+        return sum_det == 3 || sum_det == -3;
     }
 
     @SuppressWarnings("unchecked")
