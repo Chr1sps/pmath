@@ -143,7 +143,7 @@ public class PolygonTests {
     public void testToString() throws Exception {
         Point[] arr = { point_1, point_2, point_3, point_4 };
         Polygon poly = new Polygon(arr);
-        Assert.assertEquals(">-(0.0000, 0.0000)-(0.0000, 1.0000)-(1.0000, 1.0000)-(1.0000, 0.0000)->",
+        Assert.assertEquals("0: (0.0000, 0.0000)\n1: (0.0000, 1.0000)\n2: (1.0000, 1.0000)\n3: (1.0000, 0.0000)",
                 poly.toString());
     }
 }

@@ -151,11 +151,11 @@ public class Polygon implements Cloneable {
     }
 
     public String toString() {
-        String result = ">-";
-        for (Point vertex : _vertices) {
-            result += vertex.toString() + '-';
+        String result = "";
+        for (int i = 0; i < _vertices.size(); ++i) {
+            result += String.format("%d: %s\n", i, _vertices.get(i).toString());
         }
-        result += ">";
+        result = result.substring(0, result.length() - 1);
         return result;
     }
 }
