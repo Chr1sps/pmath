@@ -122,7 +122,7 @@ public class Polygon implements Cloneable {
         return result;
     }
 
-    public ArrayList<Segment> getSides() throws Exception {
+    public ArrayList<Segment> getSides() throws IdenticalVerticesException {
         Point prev = _vertices.get(_vertices.size() - 1);
         ArrayList<Segment> sides = new ArrayList<Segment>();
         for (Point vertex : _vertices) {
@@ -130,6 +130,14 @@ public class Polygon implements Cloneable {
             prev = vertex;
         }
         return sides;
+    }
+
+    public double getCircumference() throws IdenticalVerticesException {
+        double result = 0;
+        for (Segment seg : getSides()) {
+            result += seg.getLength();
+        }
+        return result;
     }
 
     public boolean isConcave() {
@@ -142,7 +150,7 @@ public class Polygon implements Cloneable {
             else
                 more_than = false;
             for (int i = 1; i < _vertices.size(); ++i) {
-                if (!(utils.determinant(_vertices.get(i), prev, pprev) < 0 ^ more_than))
+                if (utils.determinant(_vertices.get(i), prev, pprev) < 0 == more_than)
                     return true;
                 pprev = prev;
                 prev = _vertices.get(i);

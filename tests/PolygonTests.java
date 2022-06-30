@@ -93,6 +93,13 @@ public class PolygonTests {
     }
 
     @Test
+    public void testGetCircumference() throws Exception {
+        Point[] arr = { point_1, point_2, point_3, point_4 };
+        Polygon poly = new Polygon(arr);
+        Assert.assertEquals(4, poly.getCircumference(), 0.0);
+    }
+
+    @Test
     public void testIsConcaveFalse() throws Exception {
         Point[] arr = { point_1, point_2, point_3, point_4 };
         for (Point i : arr) {
