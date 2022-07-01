@@ -35,9 +35,10 @@ public class Polygon implements Cloneable {
             _vertices.add(temp);
         }
 
-        // reversing the list if the determinant of the first three points is smaller
-        // than zero
-        if (utils.determinant(_vertices.get(0), _vertices.get(1), _vertices.get(2)) < 0) {
+        // comparing two adjacent vertices and choosing the lexicographically smaller
+        // one to set up the order in the _vertices arraylist
+        Point adj_1 = _vertices.get(1), adj_2 = _vertices.get(_vertices.size() - 1);
+        if (!_lessThan(adj_1, adj_2)) {
             ArrayList<Point> temp_list = new ArrayList<Point>();
             while (_vertices.size() != 1) {
                 temp_list.add(_vertices.remove(_vertices.size() - 1));
@@ -205,7 +206,7 @@ public class Polygon implements Cloneable {
             if (stack.size() > 1) {
                 for (empty_space.add(vertex); stack.size() > 1 &&
                         utils.determinant(stack.get(stack.size() - 2),
-                                stack.get(stack.size() - 1), vertex) < 0.0; concave = true) {
+                                stack.get(stack.size() - 1), vertex) > 0.0; concave = true) {
                     empty_space.add(stack.remove(stack.size() - 1));
                 }
             }
