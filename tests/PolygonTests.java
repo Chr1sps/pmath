@@ -5,7 +5,7 @@ import PMath.shapes.*;
 import PMath.exceptions.*;
 
 public class PolygonTests {
-    private static Point point_1, point_2, point_3, point_4, point_5;
+    private static Point point_1, point_2, point_3, point_4, point_5, point_6, point_7;
     private static ArrayList<Point> vertices;
 
     @BeforeClass
@@ -15,6 +15,8 @@ public class PolygonTests {
         point_3 = new Point(1.0, 1.0);
         point_4 = new Point(1.0, 0.0);
         point_5 = new Point(0.5, 0.5);
+        point_6 = new Point(0.25, 0.25);
+        point_7 = new Point(0.5, 0.25);
         vertices = new ArrayList<Point>();
     }
 
@@ -154,11 +156,18 @@ public class PolygonTests {
         Assert.assertFalse(poly.isInside(point_3));
     }
 
-    @Test(expected = ConcavePolygonException.class)
-    public void testIsInsideException() throws Exception {
+    @Test
+    public void testIsInsideConvexTrue() throws Exception {
         Point[] arr = { point_1, point_2, point_3, point_4, point_5 };
         Polygon poly = new Polygon(arr);
-        poly.isInside(point_1);
+        Assert.assertTrue(poly.isInside(point_6));
+    }
+
+    @Test
+    public void testIsInsideConvexFalse() throws Exception {
+        Point[] arr = { point_1, point_2, point_3, point_4, point_5 };
+        Polygon poly = new Polygon(arr);
+        Assert.assertFalse(poly.isInside(point_7));
     }
 
     @Test

@@ -3,7 +3,6 @@ package PMath.shapes;
 import java.util.ArrayList;
 
 import PMath.exceptions.ColinearVerticesException;
-import PMath.exceptions.ConcavePolygonException;
 import PMath.exceptions.IdenticalVerticesException;
 import PMath.exceptions.InsufficientVerticesException;
 import PMath.exceptions.IntersectingEdgesException;
@@ -45,6 +44,30 @@ public class Polygon implements Cloneable {
             }
             _vertices.addAll(temp_list);
         }
+    }
+
+    private boolean _isInsideConvex(Point point) throws IdenticalVerticesException {
+        int p = 0, k = _vertices.size() - 2, s = k / 2;
+        for (; k - p != 1; s = (k + p) / 2) {
+            if (utils.determinant(_vertices.get(_vertices.size() - 1), _vertices.get(s), point) * utils.determinant(
+                    _vertices.get(_vertices.size() - 1), _vertices.get(s), _vertices.get(_vertices.size() - 2)) > 0)
+                p = s;
+            else
+                k = s;
+        }
+        Segment[] sides = { new Segment(_vertices.get(_vertices.size() - 1), _vertices.get(p)),
+                new Segment(_vertices.get(p), _vertices.get(k)),
+                new Segment(_vertices.get(k), _vertices.get(_vertices.size() - 1)) };
+        int sum_det = 0;
+        for (Segment side : sides) {
+            if (side.isAdherent(point))
+                return true;
+            else if ((utils.determinant(point, side)) > 0)
+                ++sum_det;
+            else
+                --sum_det;
+        }
+        return sum_det == 3 || sum_det == -3;
     }
 
     public Polygon(Point[] vertices)
@@ -160,30 +183,51 @@ public class Polygon implements Cloneable {
 
     }
 
-    public boolean isInside(Point point) throws ConcavePolygonException, IdenticalVerticesException {
-        if (isConcave())
-            throw new ConcavePolygonException("A polygon must be convex to use this algorithm.");
-        int p = 0, k = _vertices.size() - 2, s = k / 2;
-        for (; k - p != 1; s = (k + p) / 2) {
-            if (utils.determinant(_vertices.get(_vertices.size() - 1), _vertices.get(s), point) * utils.determinant(
-                    _vertices.get(_vertices.size() - 1), _vertices.get(s), _vertices.get(_vertices.size() - 2)) > 0)
-                p = s;
-            else
-                k = s;
-        }
-        Segment[] sides = { new Segment(_vertices.get(_vertices.size() - 1), _vertices.get(p)),
-                new Segment(_vertices.get(p), _vertices.get(k)),
-                new Segment(_vertices.get(k), _vertices.get(_vertices.size() - 1)) };
-        int sum_det = 0;
-        for (Segment side : sides) {
-            if (side.isAdherent(point))
+    @SuppressWarnings("unchecked")
+    public boolean isInside(Point point) throws IdenticalVerticesException, InsufficientVerticesException,
+            ColinearVerticesException, IntersectingEdgesException, CloneNotSupportedException {
+        ArrayList<Point> vertices_copy = (ArrayList<Point>) _vertices.clone(), stack = new ArrayList<Point>(),
+                empty_space = new ArrayList<Point>();
+        Point pivot = (Point) vertices_copy.get(0).clone();
+        vertices_copy.remove(0);
+
+        stack.add(pivot);
+        boolean concave = false;
+        // hull part
+        for (Point vertex : vertices_copy) {
+
+            // checking if a point belongs to an edge
+            if (new Segment(stack.get(stack.size() - 1), vertex).isAdherent(point))
                 return true;
-            else if ((utils.determinant(point, side)) > 0)
-                ++sum_det;
-            else
-                --sum_det;
+
+            // if stack has >1 point on it and the determinant is < 0 then create a list of
+            // vertices that define the empty space
+            if (stack.size() > 1) {
+                for (empty_space.add(vertex); stack.size() > 1 &&
+                        utils.determinant(stack.get(stack.size() - 2),
+                                stack.get(stack.size() - 1), vertex) < 0.0; concave = true) {
+                    empty_space.add(stack.remove(stack.size() - 1));
+                }
+            }
+
+            // if there was an empty space, concave will be set to true and there will be a
+            // recursive call to this method using a new Polygon object created from the
+            // empty space vertices
+            if (concave) {
+                empty_space.add(stack.get(stack.size() - 1));
+                concave = false;
+                if (new Polygon(empty_space).isInside(point))
+                    return false;
+                empty_space.clear();
+            }
+
+            // after handling all the scenarios, add the vertex
+            stack.add(vertex);
         }
-        return sum_det == 3 || sum_det == -3;
+
+        // resulting polygon in the stack is a convex hull, therefore we can use a
+        // normal algorithm used for convex polygons
+        return new Polygon(stack)._isInsideConvex(point);
     }
 
     @SuppressWarnings("unchecked")
