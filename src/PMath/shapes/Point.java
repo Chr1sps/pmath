@@ -13,22 +13,37 @@ public class Point implements Cloneable {
         _y = other._y;
     }
 
+    /**
+     * @return double
+     */
     public double getX() {
         return _x;
     }
 
+    /**
+     * @return double
+     */
     public double getY() {
         return _y;
     }
 
+    /**
+     * @param x
+     */
     public void setX(double x) {
         _x = x;
     }
 
+    /**
+     * @param y
+     */
     public void setY(double y) {
         _y = y;
     }
 
+    /**
+     * @return int
+     */
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -40,6 +55,10 @@ public class Point implements Cloneable {
         return result;
     }
 
+    /**
+     * @param obj
+     * @return boolean
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
@@ -56,6 +75,10 @@ public class Point implements Cloneable {
         return true;
     }
 
+    /**
+     * @return Object
+     * @throws CloneNotSupportedException
+     */
     public Object clone() throws CloneNotSupportedException {
         Point cloned = (Point) super.clone();
         cloned._x = this._x;
@@ -63,6 +86,15 @@ public class Point implements Cloneable {
         return cloned;
     }
 
+    /**
+     * Returns a string containing data about the point. Example result:
+     * 
+     * <pre>
+     * "(1.0000, 2.0000)"
+     * </pre>
+     * 
+     * @return String
+     */
     public String toString() {
         return String.format("(%.4f, %.4f)", _x, _y);
     }

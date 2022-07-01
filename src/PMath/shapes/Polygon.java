@@ -11,10 +11,22 @@ import PMath.utils;
 public class Polygon implements Cloneable {
     private ArrayList<Point> _vertices;
 
+    /**
+     * @param first
+     * @param other
+     * @return boolean
+     */
     private boolean _lessThan(Point first, Point other) {
         return (first.getX() < other.getX()) || (first.getX() == other.getX() && first.getY() < other.getY());
     }
 
+    /**
+     * This method is used to manipulate the input vertex array in order to get an
+     * unambiguous representation of a polygon in an ArrayList object that is then
+     * passed to the _vertices ArrayList.
+     * 
+     * @param list array of {@link Point}s to assign
+     */
     private void _shiftReverseAndAssign(Point[] list) {
         _vertices = new ArrayList<Point>();
         for (Point vertex : list) {
@@ -47,6 +59,14 @@ public class Polygon implements Cloneable {
         }
     }
 
+    /**
+     * This method can ONLY be used by convex polygons. Checks if a given point is
+     * inside of a convex polygon.
+     * 
+     * @param point
+     * @return boolean
+     * @throws IdenticalVerticesException
+     */
     private boolean _isInsideConvex(Point point) throws IdenticalVerticesException {
         int p = 0, k = _vertices.size() - 2, s = k / 2;
         for (; k - p != 1; s = (k + p) / 2) {
@@ -134,11 +154,21 @@ public class Polygon implements Cloneable {
         _vertices = (ArrayList<Point>) other._vertices.clone();
     }
 
+    /**
+     * Returns the amount of vertices in the polygon.
+     * 
+     * @return int
+     */
     public int size() {
         return _vertices.size();
     }
 
-    public ArrayList<Point> getVertices() throws CloneNotSupportedException {
+    /**
+     * Returns a deep copy of the ArrayList containing all the vertices.
+     * 
+     * @return ArrayList<Point>
+     */
+    public ArrayList<Point> getVertices() {
         ArrayList<Point> result = new ArrayList<Point>();
         for (Point vertex : _vertices) {
             result.add(new Point(vertex));
@@ -146,6 +176,14 @@ public class Polygon implements Cloneable {
         return result;
     }
 
+    /**
+     * Returns an ArrayList containing all the polygon's segments (note: the list
+     * starts from the segment with vertices numbered [size - 1, 0] (ordering from
+     * 0)).
+     * 
+     * @return ArrayList<Segment>
+     * @throws IdenticalVerticesException
+     */
     public ArrayList<Segment> getSides() throws IdenticalVerticesException {
         Point prev = _vertices.get(_vertices.size() - 1);
         ArrayList<Segment> sides = new ArrayList<Segment>();
@@ -156,6 +194,12 @@ public class Polygon implements Cloneable {
         return sides;
     }
 
+    /**
+     * Returns a polygon's circumference.
+     * 
+     * @return double
+     * @throws IdenticalVerticesException
+     */
     public double getCircumference() throws IdenticalVerticesException {
         double result = 0;
         for (Segment seg : getSides()) {
@@ -164,6 +208,11 @@ public class Polygon implements Cloneable {
         return result;
     }
 
+    /**
+     * Returns true if a polygon is concave.
+     * 
+     * @return boolean
+     */
     public boolean isConcave() {
         if (_vertices.size() > 3) {
             Point pprev = new Point(_vertices.get(_vertices.size() - 2)),
@@ -184,6 +233,17 @@ public class Polygon implements Cloneable {
 
     }
 
+    /**
+     * Checks if a given point is inside of a polygon.
+     * 
+     * @param point
+     * @return boolean
+     * @throws IdenticalVerticesException
+     * @throws InsufficientVerticesException
+     * @throws ColinearVerticesException
+     * @throws IntersectingEdgesException
+     * @throws CloneNotSupportedException
+     */
     @SuppressWarnings("unchecked")
     public boolean isInside(Point point) throws IdenticalVerticesException, InsufficientVerticesException,
             ColinearVerticesException, IntersectingEdgesException, CloneNotSupportedException {
@@ -231,6 +291,10 @@ public class Polygon implements Cloneable {
         return new Polygon(stack)._isInsideConvex(point);
     }
 
+    /**
+     * @return Object
+     * @throws CloneNotSupportedException
+     */
     @SuppressWarnings("unchecked")
     public Object clone() throws CloneNotSupportedException {
         Polygon cloned = (Polygon) super.clone();
@@ -238,6 +302,9 @@ public class Polygon implements Cloneable {
         return cloned;
     }
 
+    /**
+     * @return int
+     */
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -248,6 +315,10 @@ public class Polygon implements Cloneable {
         return result;
     }
 
+    /**
+     * @param obj
+     * @return boolean
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
@@ -262,6 +333,18 @@ public class Polygon implements Cloneable {
         return false;
     }
 
+    /**
+     * Returns a string containing data about the polygon. Example result:
+     * 
+     * <pre>
+     * "0: (0.0000, 0.0000)
+     * 1: (0.0000, 1.0000)
+     * 2: (1.0000, 1.0000)
+     * 3: (1.0000, 0.0000)"
+     * </pre>
+     * 
+     * @return String
+     */
     public String toString() {
         String result = "";
         for (int i = 0; i < _vertices.size(); ++i) {
