@@ -143,6 +143,15 @@ public class PolygonTests {
     }
 
     @Test
+    public void testIsInsideLexicographicalSortError() throws Exception {
+        Point[] arr_1 = { point_1, point_7, point_3, point_4 }, arr_2 = { point_1, point_4, point_3, point_7 };
+        Polygon poly_1 = new Polygon(arr_1), poly_2 = new Polygon(arr_2);
+        Assert.assertTrue(poly_1.isInside(point_4));
+        Assert.assertTrue(poly_2.isInside(point_4));
+
+    }
+
+    @Test
     public void testIsInsideFalse() throws Exception {
         Point[] arr = { point_1, point_2, point_3 };
         Polygon poly = new Polygon(arr);
@@ -229,7 +238,7 @@ public class PolygonTests {
     public void testToString() throws Exception {
         Point[] arr = { point_1, point_2, point_3, point_4 };
         Polygon poly = new Polygon(arr);
-        Assert.assertEquals("0: (0.0000, 0.0000)\n1: (0.0000, 1.0000)\n2: (1.0000, 1.0000)\n3: (1.0000, 0.0000)",
+        Assert.assertEquals("0: (0.0000, 0.0000)\n1: (1.0000, 0.0000)\n2: (1.0000, 1.0000)\n3: (0.0000, 1.0000)",
                 poly.toString());
     }
 }

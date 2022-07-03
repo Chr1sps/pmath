@@ -12,12 +12,27 @@ public class Polygon implements Cloneable {
     private ArrayList<Point> _vertices;
 
     /**
+     * Returns true if first {@link Point} is lexicografically smaller that other
+     * (checks X coordinate first, then Y).
+     * 
      * @param first
      * @param other
      * @return boolean
      */
-    private boolean _lessThan(Point first, Point other) {
+    private boolean _lessThanX(Point first, Point other) {
         return (first.getX() < other.getX()) || (first.getX() == other.getX() && first.getY() < other.getY());
+    }
+
+    /**
+     * Returns true if first {@link Point} is lexicografically smaller that other
+     * (checks Y coordinate first, then X).
+     * 
+     * @param first
+     * @param other
+     * @return boolean
+     */
+    private boolean _lessThanY(Point first, Point other) {
+        return (first.getY() < other.getY()) || (first.getY() == other.getY() && first.getX() < other.getX());
     }
 
     /**
@@ -36,7 +51,7 @@ public class Polygon implements Cloneable {
 
         // finding the lexicografically smallest Point
         for (Point vertex : _vertices) {
-            if (_lessThan(vertex, smallest)) {
+            if (_lessThanX(vertex, smallest)) {
                 smallest = vertex;
             }
         }
@@ -50,7 +65,7 @@ public class Polygon implements Cloneable {
         // comparing two adjacent vertices and choosing the lexicographically smaller
         // one to set up the order in the _vertices arraylist
         Point adj_1 = _vertices.get(1), adj_2 = _vertices.get(_vertices.size() - 1);
-        if (!_lessThan(adj_1, adj_2)) {
+        if (!_lessThanY(adj_1, adj_2)) {
             ArrayList<Point> temp_list = new ArrayList<Point>();
             while (_vertices.size() != 1) {
                 temp_list.add(_vertices.remove(_vertices.size() - 1));
@@ -266,7 +281,7 @@ public class Polygon implements Cloneable {
             if (stack.size() > 1) {
                 for (empty_space.add(vertex); stack.size() > 1 &&
                         utils.determinant(stack.get(stack.size() - 2),
-                                stack.get(stack.size() - 1), vertex) > 0.0; concave = true) {
+                                stack.get(stack.size() - 1), vertex) < 0.0; concave = true) {
                     empty_space.add(stack.remove(stack.size() - 1));
                 }
             }
