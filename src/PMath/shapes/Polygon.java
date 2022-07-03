@@ -12,30 +12,6 @@ public class Polygon implements Cloneable {
     private ArrayList<Point> _vertices;
 
     /**
-     * Returns true if first {@link Point} is lexicografically smaller that other
-     * (checks X coordinate first, then Y).
-     * 
-     * @param first
-     * @param other
-     * @return boolean
-     */
-    private boolean _lessThanX(Point first, Point other) {
-        return (first.getX() < other.getX()) || (first.getX() == other.getX() && first.getY() < other.getY());
-    }
-
-    /**
-     * Returns true if first {@link Point} is lexicografically smaller that other
-     * (checks Y coordinate first, then X).
-     * 
-     * @param first
-     * @param other
-     * @return boolean
-     */
-    private boolean _lessThanY(Point first, Point other) {
-        return (first.getY() < other.getY()) || (first.getY() == other.getY() && first.getX() < other.getX());
-    }
-
-    /**
      * This method is used to manipulate the input vertex array in order to get an
      * unambiguous representation of a polygon in an ArrayList object that is then
      * passed to the _vertices ArrayList.
@@ -51,7 +27,7 @@ public class Polygon implements Cloneable {
 
         // finding the lexicografically smallest Point
         for (Point vertex : _vertices) {
-            if (_lessThanX(vertex, smallest)) {
+            if (utils.lessThanLexicalX(vertex, smallest)) {
                 smallest = vertex;
             }
         }
@@ -65,7 +41,7 @@ public class Polygon implements Cloneable {
         // comparing two adjacent vertices and choosing the lexicographically smaller
         // one to set up the order in the _vertices arraylist
         Point adj_1 = _vertices.get(1), adj_2 = _vertices.get(_vertices.size() - 1);
-        if (!_lessThanY(adj_1, adj_2)) {
+        if (utils.determinant(adj_1, _vertices.get(0), adj_2) > 0) {
             ArrayList<Point> temp_list = new ArrayList<Point>();
             while (_vertices.size() != 1) {
                 temp_list.add(_vertices.remove(_vertices.size() - 1));
