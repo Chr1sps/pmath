@@ -1,6 +1,8 @@
 package PMath.shapes;
 
+import java.util.AbstractMap;
 import java.util.ArrayList;
+import java.util.Map;
 
 import PMath.exceptions.ColinearVerticesException;
 import PMath.exceptions.IdenticalVerticesException;
@@ -168,8 +170,10 @@ public class Polygon implements Cloneable {
     }
 
     /**
-     * Returns an ArrayList containing all the polygon's segments (note: the list
-     * starts from the segment with vertices numbered [size - 1, 0] (ordering from
+     * Returns an ArrayList containing all the polygon's {@link Segment}s (note: the
+     * list
+     * starts from the {@link Segment} with vertices numbered [size - 1, 0]
+     * (ordering from
      * 0)).
      * 
      * @return ArrayList<Segment>
@@ -225,7 +229,7 @@ public class Polygon implements Cloneable {
     }
 
     /**
-     * Checks if a given point is inside of a polygon.
+     * Checks if a given {@link Point} is inside of a polygon.
      * 
      * @param point
      * @return boolean
@@ -280,6 +284,28 @@ public class Polygon implements Cloneable {
         // resulting polygon in the stack is a convex hull, therefore we can use a
         // normal algorithm used for convex polygons
         return new Polygon(stack)._isInsideConvex(point);
+    }
+
+    /**
+     * Returns a pair of {@link Point}s signifying the span of coordinate values on
+     * which a polygon is located.
+     * 
+     * @return Entry<Point, Point>
+     */
+    public Map.Entry<Point, Point> getSpan() {
+        Point min = new Point(_vertices.get(0)), max = new Point(_vertices.get(0));
+        for (Point point : _vertices) {
+            if (point.getX() < min.getX())
+                min.setX(point.getX());
+            if (point.getY() < min.getY())
+                min.setY(point.getY());
+            if (point.getX() > max.getX())
+                max.setX(point.getX());
+            if (point.getY() > max.getY())
+                max.setY(point.getY());
+        }
+        Map.Entry<Point, Point> pair = new AbstractMap.SimpleImmutableEntry<>(min, max);
+        return pair;
     }
 
     /**
