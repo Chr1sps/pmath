@@ -18,11 +18,7 @@ public class algorithms {
      */
     private static double getPolar(Point point) throws OriginPointException {
         Point zero = new Point(0, 0);
-        double side;
-        if (point.getY() < 0)
-            side = -1;
-        else
-            side = 1;
+        double side = point.getY() < 0 ? -1 : 1;
         Point unit = new Point(0, side);
 
         try {
@@ -94,6 +90,9 @@ public class algorithms {
     }
 
     /**
+     * Returns -1/0/1 when first {@link Point} is lexicographically smaller
+     * than/equal to/bigger than the other (checks X coordinate first, then Y).
+     * 
      * @param first
      * @param other
      * @return int
@@ -144,6 +143,9 @@ public class algorithms {
     }
 
     /**
+     * Returns -1/0/1 when first {@link Point} is lexicographically smaller
+     * than/equal to/bigger than the other (checks Y coordinate first, then X).
+     * 
      * @param first
      * @param other
      * @return int
@@ -186,7 +188,8 @@ public class algorithms {
     }
 
     /**
-     * Returns: -1
+     * Returns -1/0/1 when first {@link Point} has a smaller/equal/bigger polar
+     * angle (when looking at X axis) than the other, respectively.
      * 
      * @param first
      * @param other

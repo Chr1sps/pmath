@@ -1,7 +1,7 @@
 package PMath.shapes;
 
 import PMath.exceptions.IdenticalVerticesException;
-import PMath.utils;
+import PMath.utils.algorithms;
 
 public class Segment implements Cloneable {
     private Point _a, _b;
@@ -69,7 +69,7 @@ public class Segment implements Cloneable {
      * @return boolean
      */
     public boolean isAdherent(Point p) {
-        if (utils.determinant(p, this) == 0.0) {
+        if (algorithms.determinant(p, this) == 0.0) {
             if (_b.getX() - _a.getX() == 0.0) {
                 if (p.getY() >= Math.min(_a.getY(), _b.getY()) && p.getY() <= Math.max(_a.getY(), _b.getY()))
                     return true;
@@ -88,8 +88,8 @@ public class Segment implements Cloneable {
      * @return boolean
      */
     public boolean isIntersected(Segment other) {
-        double det_1 = utils.determinant(_a, other) * utils.determinant(_b, other),
-                det_2 = utils.determinant(other._a, this) * utils.determinant(other._b, this);
+        double det_1 = algorithms.determinant(_a, other) * algorithms.determinant(_b, other),
+                det_2 = algorithms.determinant(other._a, this) * algorithms.determinant(other._b, this);
         if (det_1 < 0 && det_2 < 0)
             return true;
         else if (det_1 == 0 && det_2 < 0) {
