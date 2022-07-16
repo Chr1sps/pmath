@@ -125,10 +125,23 @@ public class SegmentTests {
     @Test
     public void testEquals() throws Exception {
         Segment seg_1 = new Segment(a1, b1), seg_2 = new Segment(a1, b1),
-                seg_3 = new Segment(a1, b2);
+                seg_3 = new Segment(a1, b2), seg_4 = new Segment(b1, a1);
         Assert.assertTrue(seg_1.equals(seg_2));
         Assert.assertFalse(seg_1.equals(seg_3));
         Assert.assertFalse(seg_2.equals(seg_3));
+        Assert.assertFalse(seg_1.equals(seg_4));
+
+    }
+
+    @Test
+    public void testEqualsIgnoreOrder() throws Exception {
+        Segment seg_1 = new Segment(a1, b1), seg_2 = new Segment(a1, b1),
+                seg_3 = new Segment(a1, b2), seg_4 = new Segment(b1, a1);
+        Assert.assertTrue(seg_1.equalsIgnoreOrder(seg_2));
+        Assert.assertFalse(seg_1.equalsIgnoreOrder(seg_3));
+        Assert.assertFalse(seg_2.equalsIgnoreOrder(seg_3));
+        Assert.assertTrue(seg_1.equalsIgnoreOrder(seg_4));
+
     }
 
     @Test

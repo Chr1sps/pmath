@@ -3,6 +3,11 @@ package PMath.shapes;
 import PMath.exceptions.IdenticalVerticesException;
 import PMath.utils.algorithms;
 
+/**
+ * This class serves as a way to represent a segment. A segment is defined by
+ * two points (defined in the class as a and b), that represent two opposing
+ * ends of a segment. These points must not have equal coordinates.
+ */
 public class Segment implements Cloneable {
     private Point _a, _b;
 
@@ -194,5 +199,20 @@ public class Segment implements Cloneable {
         if (!_b.equals(other._b))
             return false;
         return true;
+    }
+
+    public boolean equalsIgnoreOrder(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Segment other = (Segment) obj;
+        if (_a.equals(other._a) && _b.equals(other._b))
+            return true;
+        if (_a.equals(other._b) && _b.equals(other._a))
+            return true;
+        return false;
     }
 }
