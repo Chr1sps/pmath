@@ -10,6 +10,20 @@ import PMath.exceptions.InsufficientVerticesException;
 import PMath.exceptions.IntersectingEdgesException;
 import PMath.utils.algorithms;
 
+/**
+ * This class serves as a way to represent a polygon on a Euclidian plane. A
+ * polygon is defined by a list of vertices. Each vertex on a list is connected
+ * to the one before and after (with the last one and the first one also being
+ * connected). There are three conditions that a list of vertices must meet in
+ * order to represent a valid polygon:
+ * <p>
+ * - there must be at least 3 vertices in the list
+ * <p>
+ * - no three subsequent vertices shall lie on the same line
+ * <p>
+ * - no two non-subsequent edges shall intersect with each other (this includes
+ * being connected via a shared vertex and being colinear).
+ */
 public class Polygon implements Cloneable {
     private ArrayList<Point> _vertices;
 

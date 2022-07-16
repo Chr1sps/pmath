@@ -1,5 +1,10 @@
 package PMath.shapes;
 
+/**
+ * This class serves as a way to represent a point on a Euclidian plane. A point
+ * is
+ * represented by coordinates (x, y).
+ */
 public class Point implements Cloneable {
     private double _x, _y;
 
