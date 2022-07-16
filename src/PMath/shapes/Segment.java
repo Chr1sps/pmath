@@ -54,6 +54,8 @@ public class Segment implements Cloneable {
     }
 
     /**
+     * Returns the length of this {@link Segment}.
+     * 
      * @return double
      */
     public double getLength() {
@@ -63,22 +65,32 @@ public class Segment implements Cloneable {
     }
 
     /**
-     * Returns true if the given point lies on the segment.
+     * Returns true if the given {@link Point} lies on this {@link Segment}.
      * 
-     * @param p
+     * @param point
      * @return boolean
      */
-    public boolean isAdherent(Point p) {
-        if (algorithms.determinant(p, this) == 0.0) {
+    public boolean isAdherent(Point point) {
+        if (algorithms.determinant(point, this) == 0.0) {
             if (_b.getX() - _a.getX() == 0.0) {
-                if (p.getY() >= Math.min(_a.getY(), _b.getY()) && p.getY() <= Math.max(_a.getY(), _b.getY()))
+                if (point.getY() >= Math.min(_a.getY(), _b.getY()) && point.getY() <= Math.max(_a.getY(), _b.getY()))
                     return true;
             } else {
-                if (p.getX() >= Math.min(_a.getX(), _b.getX()) && p.getX() <= Math.max(_a.getX(), _b.getX()))
+                if (point.getX() >= Math.min(_a.getX(), _b.getX()) && point.getX() <= Math.max(_a.getX(), _b.getX()))
                     return true;
             }
         }
         return false;
+    }
+
+    /**
+     * Returns true if the given {@link Segment} lies on this {@link Segment}.
+     * 
+     * @param segment
+     * @return boolean
+     */
+    public boolean isAdherent(Segment segment) {
+        return isAdherent(segment.getA()) && isAdherent(segment.getB());
     }
 
     /**
@@ -104,6 +116,28 @@ public class Segment implements Cloneable {
                 return true;
         }
         return false;
+    }
+
+    /**
+     * Returns true when a given {@link Point} is colinear with this
+     * {@link Segment}.
+     * 
+     * @param point
+     * @return boolean
+     */
+    public boolean isColinear(Point point) {
+        return algorithms.determinant(point, this) == 0;
+    }
+
+    /**
+     * Returns true when a given {@link Segment} is colinear with this
+     * {@link Segment}.
+     * 
+     * @param segment
+     * @return boolean
+     */
+    public boolean isColinear(Segment segment) {
+        return isColinear(segment.getA()) && isColinear(segment.getB());
     }
 
     /**

@@ -66,11 +66,21 @@ public class SegmentTests {
     }
 
     @Test
-    public void testIsAdherent() throws Exception {
+    public void testIsAdherentPoint() throws Exception {
         Segment seg = new Segment(a1, b1);
         Assert.assertTrue(seg.isAdherent(b3));
         Assert.assertTrue(seg.isAdherent(a1));
         Assert.assertFalse(seg.isAdherent(zero));
+    }
+
+    @Test
+    public void testIsAdherentSegment() throws Exception {
+        Segment seg = new Segment(a1, b1), seg_2 = new Segment(a3, b1);
+        Assert.assertTrue(seg.isAdherent(seg));
+        Assert.assertTrue(seg_2.isAdherent(seg));
+        Assert.assertTrue(seg_2.isAdherent(new Segment(a1, b3)));
+        Assert.assertFalse(seg.isAdherent(new Segment(a2, b2)));
+        Assert.assertFalse(seg.isAdherent(new Segment(a3, b3)));
     }
 
     @Test
@@ -85,6 +95,25 @@ public class SegmentTests {
         Assert.assertFalse(seg2.isIntersected(seg3));
         Assert.assertTrue(seg3.isIntersected(seg4));
         Assert.assertTrue(seg1.isIntersected(seg4));
+    }
+
+    @Test
+    public void testIsColinearPoint() throws Exception {
+        Segment seg = new Segment(a1, b1);
+        Assert.assertTrue(seg.isColinear(b3));
+        Assert.assertTrue(seg.isColinear(a1));
+        Assert.assertFalse(seg.isColinear(a2));
+        Assert.assertFalse(seg.isColinear(zero));
+    }
+
+    @Test
+    public void testIsColinearSegment() throws Exception {
+        Segment seg = new Segment(a1, b1), seg_2 = new Segment(a3, b1);
+        Assert.assertTrue(seg.isColinear(seg));
+        Assert.assertTrue(seg_2.isColinear(seg));
+        Assert.assertTrue(seg_2.isColinear(new Segment(a1, b3)));
+        Assert.assertFalse(seg.isColinear(new Segment(a2, b2)));
+        Assert.assertTrue(seg.isColinear(new Segment(a3, b3)));
     }
 
     @Test
