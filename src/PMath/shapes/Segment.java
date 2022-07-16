@@ -170,6 +170,7 @@ public class Segment implements Cloneable {
     }
 
     /**
+     * 
      * @return int
      */
     @Override
@@ -182,6 +183,9 @@ public class Segment implements Cloneable {
     }
 
     /**
+     * Returns true if the given object is a {@link Segment} with a and b points
+     * equal to this {@link Segment}s a and b points, respectively.
+     * 
      * @param obj
      * @return boolean
      */
@@ -201,6 +205,14 @@ public class Segment implements Cloneable {
         return true;
     }
 
+    /**
+     * Returns true if the given object is a {@link Segment} with a and b points
+     * equal to this {@link Segment}s a and b points, no matter the order (a and b
+     * can be switched).
+     * 
+     * @param obj
+     * @return boolean
+     */
     public boolean equalsIgnoreOrder(Object obj) {
         if (this == obj)
             return true;
