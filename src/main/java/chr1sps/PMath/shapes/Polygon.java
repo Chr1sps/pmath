@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import chr1sps.PMath.exceptions.ColinearVerticesException;
-import chr1sps.PMath.exceptions.IdenticalVerticesException;
+import chr1sps.PMath.exceptions.IdenticalPointsException;
 import chr1sps.PMath.exceptions.InsufficientVerticesException;
 import chr1sps.PMath.exceptions.IntersectingEdgesException;
 import chr1sps.PMath.utils.algorithms;
@@ -33,11 +33,12 @@ public class Polygon implements Cloneable {
      * passed to the _vertices ArrayList.
      * 
      * @param list array of {@link Point}s to assign
+     * @throws CloneNotSupportedException
      */
-    private void _shiftReverseAndAssign(Point[] list) {
+    private void _shiftReverseAndAssign(Point[] list) throws CloneNotSupportedException {
         _vertices = new ArrayList<Point>();
         for (Point vertex : list) {
-            _vertices.add(vertex);
+            _vertices.add((Point) vertex.clone());
         }
         Point smallest = _vertices.get(0), temp;
 
@@ -72,9 +73,9 @@ public class Polygon implements Cloneable {
      * 
      * @param point
      * @return boolean
-     * @throws IdenticalVerticesException
+     * @throws IdenticalPointsException
      */
-    private boolean _isInsideConvex(Point point) throws IdenticalVerticesException {
+    private boolean _isInsideConvex(Point point) throws IdenticalPointsException {
         int p = 0, k = _vertices.size() - 2, s = k / 2;
         for (; k - p != 1; s = (k + p) / 2) {
             if (algorithms.determinant(_vertices.get(_vertices.size() - 1), _vertices.get(s), point)
@@ -103,12 +104,14 @@ public class Polygon implements Cloneable {
     public Polygon(Point[] vertices)
             throws InsufficientVerticesException,
             ColinearVerticesException,
-            IdenticalVerticesException,
-            IntersectingEdgesException {
+            IdenticalPointsException,
+            IntersectingEdgesException,
+            CloneNotSupportedException {
 
         // checking if there are 3 or more vertices
         if (vertices.length < 3) {
-            throw new InsufficientVerticesException("Polygon must have at least 3 vertices.");
+            throw new InsufficientVerticesException(
+                    "Polygon must have at least 3 vertices. Amount of vertices given: " + vertices.length + ".");
         }
 
         // checking if no 3 subsequent vertices are in the same line
@@ -152,8 +155,9 @@ public class Polygon implements Cloneable {
     public Polygon(ArrayList<Point> vertices)
             throws InsufficientVerticesException,
             ColinearVerticesException,
-            IdenticalVerticesException,
-            IntersectingEdgesException {
+            IdenticalPointsException,
+            IntersectingEdgesException,
+            CloneNotSupportedException {
         this((Point[]) vertices.toArray(new Point[0]));
 
     }
@@ -193,9 +197,9 @@ public class Polygon implements Cloneable {
      * 0)).
      * 
      * @return ArrayList<Segment>
-     * @throws IdenticalVerticesException
+     * @throws IdenticalPointsException
      */
-    public ArrayList<Segment> getSides() throws IdenticalVerticesException {
+    public ArrayList<Segment> getSides() throws IdenticalPointsException {
         Point prev = _vertices.get(_vertices.size() - 1);
         ArrayList<Segment> sides = new ArrayList<Segment>();
         for (Point vertex : _vertices) {
@@ -209,9 +213,9 @@ public class Polygon implements Cloneable {
      * Returns a polygon's circumference.
      * 
      * @return double
-     * @throws IdenticalVerticesException
+     * @throws IdenticalPointsException
      */
-    public double getCircumference() throws IdenticalVerticesException {
+    public double getCircumference() throws IdenticalPointsException {
         double result = 0;
         for (Segment seg : getSides()) {
             result += seg.getLength();
@@ -249,14 +253,14 @@ public class Polygon implements Cloneable {
      * 
      * @param point
      * @return boolean
-     * @throws IdenticalVerticesException
+     * @throws IdenticalPointsException
      * @throws InsufficientVerticesException
      * @throws ColinearVerticesException
      * @throws IntersectingEdgesException
      * @throws CloneNotSupportedException
      */
     @SuppressWarnings("unchecked")
-    public boolean isInside(Point point) throws IdenticalVerticesException, InsufficientVerticesException,
+    public boolean isInside(Point point) throws IdenticalPointsException, InsufficientVerticesException,
             ColinearVerticesException, IntersectingEdgesException, CloneNotSupportedException {
         ArrayList<Point> vertices_copy = (ArrayList<Point>) _vertices.clone(), stack = new ArrayList<Point>(),
                 empty_space = new ArrayList<Point>();

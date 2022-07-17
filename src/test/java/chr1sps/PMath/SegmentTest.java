@@ -4,7 +4,7 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import chr1sps.PMath.exceptions.IdenticalVerticesException;
+import chr1sps.PMath.exceptions.IdenticalPointsException;
 import chr1sps.PMath.shapes.Point;
 import chr1sps.PMath.shapes.Segment;
 
@@ -24,7 +24,7 @@ public class SegmentTest {
     }
 
     @Test
-    public void testConstructorValid() throws IdenticalVerticesException {
+    public void testConstructorValid() throws IdenticalPointsException {
         Segment seg = new Segment(a1, b1);
         Assert.assertEquals(1.0, seg.getA().getX(), 0.0);
         Assert.assertEquals(2.0, seg.getA().getY(), 0.0);
@@ -33,39 +33,39 @@ public class SegmentTest {
 
     }
 
-    @Test(expected = IdenticalVerticesException.class)
-    public void testConstructorException() throws IdenticalVerticesException {
+    @Test(expected = IdenticalPointsException.class)
+    public void testConstructorException() throws IdenticalPointsException {
         new Segment(a1, a1);
     }
 
     @Test
-    public void testSettersValid() throws IdenticalVerticesException {
+    public void testSettersValid() throws IdenticalPointsException {
         Segment seg = new Segment(a1, b1);
         seg.setB(b2);
         Assert.assertEquals(4.0, seg.getB().getX(), 0.0);
         Assert.assertEquals(3.0, seg.getB().getY(), 0.0);
     }
 
-    @Test(expected = IdenticalVerticesException.class)
-    public void testSettersException() throws IdenticalVerticesException {
+    @Test(expected = IdenticalPointsException.class)
+    public void testSettersException() throws IdenticalPointsException {
         Segment seg = new Segment(a1, b1);
         seg.setA(b1);
     }
 
     @Test
-    public void testGetLengthOneDimension() throws IdenticalVerticesException {
+    public void testGetLengthOneDimension() throws IdenticalPointsException {
         Segment seg = new Segment(a2, zero);
         Assert.assertEquals(4.0, seg.getLength(), 0.0 /* 1e-15 */);
     }
 
     @Test
-    public void testGetLengthTwoDimensions() throws IdenticalVerticesException {
+    public void testGetLengthTwoDimensions() throws IdenticalPointsException {
         Segment seg = new Segment(zero, b1);
         Assert.assertEquals(5.0, seg.getLength(), 0.0 /* 1e-15 */);
     }
 
     @Test
-    public void testGetLengthRounding() throws IdenticalVerticesException {
+    public void testGetLengthRounding() throws IdenticalPointsException {
         Segment seg = new Segment(zero, floating);
         Assert.assertEquals(0.005, seg.getLength(), 1e-15);
     }

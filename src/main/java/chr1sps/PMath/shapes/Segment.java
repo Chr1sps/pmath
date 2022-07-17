@@ -1,19 +1,20 @@
 package chr1sps.PMath.shapes;
 
-import chr1sps.PMath.exceptions.IdenticalVerticesException;
+import chr1sps.PMath.exceptions.IdenticalPointsException;
 import chr1sps.PMath.utils.algorithms;
 
 /**
- * This class serves as a way to represent a segment. A segment is defined by
+ * This class serves as a way to represent a segment on a Euclidian plane. A
+ * segment is defined by
  * two points (defined in the class as a and b), that represent two opposing
  * ends of a segment. These points must not have equal coordinates.
  */
 public class Segment implements Cloneable {
     private Point _a, _b;
 
-    public Segment(Point a, Point b) throws IdenticalVerticesException {
+    public Segment(Point a, Point b) throws IdenticalPointsException {
         if (a.equals(b)) {
-            throw new IdenticalVerticesException("Points must differ.");
+            throw new IdenticalPointsException("Points that make up a segment must differ.");
         }
         _a = new Point(a);
         _b = new Point(b);
@@ -40,21 +41,21 @@ public class Segment implements Cloneable {
 
     /**
      * @param a
-     * @throws IdenticalVerticesException
+     * @throws IdenticalPointsException
      */
-    public void setA(Point a) throws IdenticalVerticesException {
+    public void setA(Point a) throws IdenticalPointsException {
         if (a.equals(_b))
-            throw new IdenticalVerticesException("New point A must differ from point B.");
+            throw new IdenticalPointsException("New point A must differ from point B.");
         _a = new Point(a);
     }
 
     /**
      * @param b
-     * @throws IdenticalVerticesException
+     * @throws IdenticalPointsException
      */
-    public void setB(Point b) throws IdenticalVerticesException {
+    public void setB(Point b) throws IdenticalPointsException {
         if (b.equals(_a))
-            throw new IdenticalVerticesException("New point B must differ from point A.");
+            throw new IdenticalPointsException("New point B must differ from point A.");
         _b = new Point(b);
     }
 

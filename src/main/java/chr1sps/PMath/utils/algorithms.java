@@ -1,6 +1,6 @@
 package chr1sps.PMath.utils;
 
-import chr1sps.PMath.exceptions.IdenticalVerticesException;
+import chr1sps.PMath.exceptions.IdenticalPointsException;
 import chr1sps.PMath.exceptions.OriginPointException;
 import chr1sps.PMath.shapes.Point;
 import chr1sps.PMath.shapes.Segment;
@@ -23,7 +23,7 @@ public class algorithms {
 
         try {
             return 2 - side + determinant(point, zero, unit) / new Segment(zero, point).getLength();
-        } catch (IdenticalVerticesException e) {
+        } catch (IdenticalPointsException e) {
             throw new OriginPointException(
                     "Argument point cannot be the coordinate system origin (point [0, 0]).");
         }
