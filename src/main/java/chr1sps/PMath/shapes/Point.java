@@ -86,8 +86,8 @@ public class Point implements Cloneable {
      */
     public Object clone() throws CloneNotSupportedException {
         Point cloned = (Point) super.clone();
-        cloned._x = this._x;
-        cloned._y = this._y;
+        cloned._x = _x;
+        cloned._y = _y;
         return cloned;
     }
 

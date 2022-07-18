@@ -1,6 +1,9 @@
 package chr1sps.PMath;
 
-import org.junit.Assert;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -26,10 +29,10 @@ public class SegmentTest {
     @Test
     public void testConstructorValid() throws IdenticalPointsException {
         Segment seg = new Segment(a1, b1);
-        Assert.assertEquals(1.0, seg.getA().getX(), 0.0);
-        Assert.assertEquals(2.0, seg.getA().getY(), 0.0);
-        Assert.assertEquals(3.0, seg.getB().getX(), 0.0);
-        Assert.assertEquals(4.0, seg.getB().getY(), 0.0);
+        assertEquals(1.0, seg.getA().getX(), 0.0);
+        assertEquals(2.0, seg.getA().getY(), 0.0);
+        assertEquals(3.0, seg.getB().getX(), 0.0);
+        assertEquals(4.0, seg.getB().getY(), 0.0);
 
     }
 
@@ -42,8 +45,8 @@ public class SegmentTest {
     public void testSettersValid() throws IdenticalPointsException {
         Segment seg = new Segment(a1, b1);
         seg.setB(b2);
-        Assert.assertEquals(4.0, seg.getB().getX(), 0.0);
-        Assert.assertEquals(3.0, seg.getB().getY(), 0.0);
+        assertEquals(4.0, seg.getB().getX(), 0.0);
+        assertEquals(3.0, seg.getB().getY(), 0.0);
     }
 
     @Test(expected = IdenticalPointsException.class)
@@ -55,37 +58,37 @@ public class SegmentTest {
     @Test
     public void testGetLengthOneDimension() throws IdenticalPointsException {
         Segment seg = new Segment(a2, zero);
-        Assert.assertEquals(4.0, seg.getLength(), 0.0 /* 1e-15 */);
+        assertEquals(4.0, seg.getLength(), 0.0 /* 1e-15 */);
     }
 
     @Test
     public void testGetLengthTwoDimensions() throws IdenticalPointsException {
         Segment seg = new Segment(zero, b1);
-        Assert.assertEquals(5.0, seg.getLength(), 0.0 /* 1e-15 */);
+        assertEquals(5.0, seg.getLength(), 0.0 /* 1e-15 */);
     }
 
     @Test
     public void testGetLengthRounding() throws IdenticalPointsException {
         Segment seg = new Segment(zero, floating);
-        Assert.assertEquals(0.005, seg.getLength(), 1e-15);
+        assertEquals(0.005, seg.getLength(), 1e-15);
     }
 
     @Test
     public void testIsAdherentPoint() throws Exception {
         Segment seg = new Segment(a1, b1);
-        Assert.assertTrue(seg.isAdherent(b3));
-        Assert.assertTrue(seg.isAdherent(a1));
-        Assert.assertFalse(seg.isAdherent(zero));
+        assertTrue(seg.isAdherent(b3));
+        assertTrue(seg.isAdherent(a1));
+        assertFalse(seg.isAdherent(zero));
     }
 
     @Test
     public void testIsAdherentSegment() throws Exception {
         Segment seg = new Segment(a1, b1), seg_2 = new Segment(a3, b1);
-        Assert.assertTrue(seg.isAdherent(seg));
-        Assert.assertTrue(seg_2.isAdherent(seg));
-        Assert.assertTrue(seg_2.isAdherent(new Segment(a1, b3)));
-        Assert.assertFalse(seg.isAdherent(new Segment(a2, b2)));
-        Assert.assertFalse(seg.isAdherent(new Segment(a3, b3)));
+        assertTrue(seg.isAdherent(seg));
+        assertTrue(seg_2.isAdherent(seg));
+        assertTrue(seg_2.isAdherent(new Segment(a1, b3)));
+        assertFalse(seg.isAdherent(new Segment(a2, b2)));
+        assertFalse(seg.isAdherent(new Segment(a3, b3)));
     }
 
     @Test
@@ -94,47 +97,47 @@ public class SegmentTest {
                 seg2 = new Segment(a2, b2),
                 seg3 = new Segment(a3, b3),
                 seg4 = new Segment(a2, b3);
-        Assert.assertTrue(seg1.isIntersected(seg1));
-        Assert.assertTrue(seg1.isIntersected(seg2));
-        Assert.assertTrue(seg1.isIntersected(seg3));
-        Assert.assertFalse(seg2.isIntersected(seg3));
-        Assert.assertTrue(seg3.isIntersected(seg4));
-        Assert.assertTrue(seg1.isIntersected(seg4));
+        assertTrue(seg1.isIntersected(seg1));
+        assertTrue(seg1.isIntersected(seg2));
+        assertTrue(seg1.isIntersected(seg3));
+        assertFalse(seg2.isIntersected(seg3));
+        assertTrue(seg3.isIntersected(seg4));
+        assertTrue(seg1.isIntersected(seg4));
     }
 
     @Test
     public void testIsColinearPoint() throws Exception {
         Segment seg = new Segment(a1, b1);
-        Assert.assertTrue(seg.isColinear(b3));
-        Assert.assertTrue(seg.isColinear(a1));
-        Assert.assertFalse(seg.isColinear(a2));
-        Assert.assertFalse(seg.isColinear(zero));
+        assertTrue(seg.isColinear(b3));
+        assertTrue(seg.isColinear(a1));
+        assertFalse(seg.isColinear(a2));
+        assertFalse(seg.isColinear(zero));
     }
 
     @Test
     public void testIsColinearSegment() throws Exception {
         Segment seg = new Segment(a1, b1), seg_2 = new Segment(a3, b1);
-        Assert.assertTrue(seg.isColinear(seg));
-        Assert.assertTrue(seg_2.isColinear(seg));
-        Assert.assertTrue(seg_2.isColinear(new Segment(a1, b3)));
-        Assert.assertFalse(seg.isColinear(new Segment(a2, b2)));
-        Assert.assertTrue(seg.isColinear(new Segment(a3, b3)));
+        assertTrue(seg.isColinear(seg));
+        assertTrue(seg_2.isColinear(seg));
+        assertTrue(seg_2.isColinear(new Segment(a1, b3)));
+        assertFalse(seg.isColinear(new Segment(a2, b2)));
+        assertTrue(seg.isColinear(new Segment(a3, b3)));
     }
 
     @Test
     public void testToString() throws Exception {
         Segment seg = new Segment(a1, b1);
-        Assert.assertEquals("(1.0000, 2.0000)-(3.0000, 4.0000)", seg.toString());
+        assertEquals("(1.0000, 2.0000)-(3.0000, 4.0000)", seg.toString());
     }
 
     @Test
     public void testEquals() throws Exception {
         Segment seg_1 = new Segment(a1, b1), seg_2 = new Segment(a1, b1),
                 seg_3 = new Segment(a1, b2), seg_4 = new Segment(b1, a1);
-        Assert.assertTrue(seg_1.equals(seg_2));
-        Assert.assertFalse(seg_1.equals(seg_3));
-        Assert.assertFalse(seg_2.equals(seg_3));
-        Assert.assertFalse(seg_1.equals(seg_4));
+        assertTrue(seg_1.equals(seg_2));
+        assertFalse(seg_1.equals(seg_3));
+        assertFalse(seg_2.equals(seg_3));
+        assertFalse(seg_1.equals(seg_4));
 
     }
 
@@ -142,10 +145,10 @@ public class SegmentTest {
     public void testEqualsIgnoreOrder() throws Exception {
         Segment seg_1 = new Segment(a1, b1), seg_2 = new Segment(a1, b1),
                 seg_3 = new Segment(a1, b2), seg_4 = new Segment(b1, a1);
-        Assert.assertTrue(seg_1.equalsIgnoreOrder(seg_2));
-        Assert.assertFalse(seg_1.equalsIgnoreOrder(seg_3));
-        Assert.assertFalse(seg_2.equalsIgnoreOrder(seg_3));
-        Assert.assertTrue(seg_1.equalsIgnoreOrder(seg_4));
+        assertTrue(seg_1.equalsIgnoreOrder(seg_2));
+        assertFalse(seg_1.equalsIgnoreOrder(seg_3));
+        assertFalse(seg_2.equalsIgnoreOrder(seg_3));
+        assertTrue(seg_1.equalsIgnoreOrder(seg_4));
 
     }
 
@@ -153,15 +156,15 @@ public class SegmentTest {
     public void testHashCode() throws Exception {
         Segment seg_1 = new Segment(a1, b1), seg_2 = new Segment(a1, b1),
                 seg_3 = new Segment(a1, b2);
-        Assert.assertTrue(seg_1.hashCode() == seg_2.hashCode());
-        Assert.assertFalse(seg_1.hashCode() == seg_3.hashCode());
-        Assert.assertFalse(seg_2.hashCode() == seg_3.hashCode());
+        assertTrue(seg_1.hashCode() == seg_2.hashCode());
+        assertFalse(seg_1.hashCode() == seg_3.hashCode());
+        assertFalse(seg_2.hashCode() == seg_3.hashCode());
     }
 
     @Test
     public void testClone() throws Exception {
         Segment seg = new Segment(a1, b1), cloned = (Segment) seg.clone();
-        Assert.assertEquals(seg, cloned);
-        Assert.assertFalse(seg == cloned);
+        assertEquals(seg, cloned);
+        assertFalse(seg == cloned);
     }
 }

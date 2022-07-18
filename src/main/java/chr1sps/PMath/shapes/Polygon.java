@@ -1,5 +1,8 @@
 package chr1sps.PMath.shapes;
 
+import static chr1sps.PMath.utils.algorithms.determinant;
+import static chr1sps.PMath.utils.algorithms.lessThanLexicalX;
+
 import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Map;
@@ -8,7 +11,6 @@ import chr1sps.PMath.exceptions.ColinearVerticesException;
 import chr1sps.PMath.exceptions.IdenticalPointsException;
 import chr1sps.PMath.exceptions.InsufficientVerticesException;
 import chr1sps.PMath.exceptions.IntersectingEdgesException;
-import chr1sps.PMath.utils.algorithms;
 
 /**
  * This class serves as a way to represent a polygon on a Euclidian plane. A
@@ -44,7 +46,7 @@ public class Polygon implements Cloneable {
 
         // finding the lexicografically smallest Point
         for (Point vertex : _vertices) {
-            if (algorithms.lessThanLexicalX(vertex, smallest)) {
+            if (lessThanLexicalX(vertex, smallest)) {
                 smallest = vertex;
             }
         }
@@ -58,7 +60,7 @@ public class Polygon implements Cloneable {
         // comparing two adjacent vertices and choosing the lexicographically smaller
         // one to set up the order in the _vertices arraylist
         Point adj_1 = _vertices.get(1), adj_2 = _vertices.get(_vertices.size() - 1);
-        if (algorithms.determinant(adj_1, _vertices.get(0), adj_2) > 0) {
+        if (determinant(adj_1, _vertices.get(0), adj_2) > 0) {
             ArrayList<Point> temp_list = new ArrayList<Point>();
             while (_vertices.size() != 1) {
                 temp_list.add(_vertices.remove(_vertices.size() - 1));
@@ -78,8 +80,8 @@ public class Polygon implements Cloneable {
     private boolean _isInsideConvex(Point point) throws IdenticalPointsException {
         int p = 0, k = _vertices.size() - 2, s = k / 2;
         for (; k - p != 1; s = (k + p) / 2) {
-            if (algorithms.determinant(_vertices.get(_vertices.size() - 1), _vertices.get(s), point)
-                    * algorithms.determinant(
+            if (determinant(_vertices.get(_vertices.size() - 1), _vertices.get(s), point)
+                    * determinant(
                             _vertices.get(_vertices.size() - 1), _vertices.get(s),
                             _vertices.get(_vertices.size() - 2)) > 0)
                 p = s;
@@ -93,7 +95,7 @@ public class Polygon implements Cloneable {
         for (Segment side : sides) {
             if (side.isAdherent(point))
                 return true;
-            else if ((algorithms.determinant(point, side)) > 0)
+            else if ((determinant(point, side)) > 0)
                 ++sum_det;
             else
                 --sum_det;
@@ -118,7 +120,7 @@ public class Polygon implements Cloneable {
         Point pprev = vertices[vertices.length - 2], prev = vertices[vertices.length - 1];
         for (Point current : vertices) {
 
-            if (algorithms.determinant(current, prev, pprev) == 0)
+            if (determinant(current, prev, pprev) == 0)
                 throw new ColinearVerticesException("No 3 subsequent points shall lie on the same line.");
             pprev = prev;
             prev = current;
@@ -233,12 +235,12 @@ public class Polygon implements Cloneable {
             Point pprev = new Point(_vertices.get(_vertices.size() - 2)),
                     prev = new Point(_vertices.get(_vertices.size() - 1));
             boolean more_than;
-            if (algorithms.determinant(_vertices.get(0), prev, pprev) > 0)
+            if (determinant(_vertices.get(0), prev, pprev) > 0)
                 more_than = true;
             else
                 more_than = false;
             for (int i = 1; i < _vertices.size(); ++i) {
-                if (algorithms.determinant(_vertices.get(i), prev, pprev) < 0 == more_than)
+                if (determinant(_vertices.get(i), prev, pprev) < 0 == more_than)
                     return true;
                 pprev = prev;
                 prev = _vertices.get(i);
@@ -280,7 +282,7 @@ public class Polygon implements Cloneable {
             // vertices that define the empty space
             if (stack.size() > 1) {
                 for (empty_space.add(vertex); stack.size() > 1 &&
-                        algorithms.determinant(stack.get(stack.size() - 2),
+                        determinant(stack.get(stack.size() - 2),
                                 stack.get(stack.size() - 1), vertex) < 0.0; concave = true) {
                     empty_space.add(stack.remove(stack.size() - 1));
                 }

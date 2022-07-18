@@ -7,7 +7,7 @@ import chr1sps.PMath.exceptions.InvalidCoefficientsException;
  * This class serves as a way to represent a line on a Euclidian plane. A line
  * is represented by an equation of form Ax + By + C = 0.
  */
-public class Line {
+public class Line implements Cloneable {
     private double _a, _b, _c;
 
     private void _initiateLine(Point a, Point b) {
@@ -56,12 +56,28 @@ public class Line {
         _initiateLine(segment.getA(), segment.getB());
     }
 
+    public Line(Line other) {
+        _a = other._a;
+        _b = other._b;
+        _c = other._c;
+    }
+
     public boolean isAdherent(Point point) {
         return _a * point.getX() + _b * point.getY() + _c == 0;
     }
 
     public boolean isAdherent(Segment segment) {
         return isAdherent(segment.getA()) && isAdherent(segment.getB());
+    }
+
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        Double[] arr = { _a, _b, _c };
+        for (Double temp : arr) {
+            result = prime * result + temp.hashCode();
+        }
+        return result;
     }
 
     public boolean equals(Object obj) {
@@ -79,5 +95,30 @@ public class Line {
         if (_c != other._c)
             return false;
         return true;
+    }
+
+    private String _formatCoefficient(double d) {
+        if (d == 0)
+            return "";
+        else if (d < 0)
+            return String.format(" - %.4f", -d);
+        else
+            return String.format(" + %.4f", d);
+    }
+
+    public Object clone() throws CloneNotSupportedException {
+        Line cloned = (Line) super.clone();
+        cloned._a = _a;
+        cloned._b = _b;
+        cloned._c = _c;
+        return cloned;
+    }
+
+    public String toString() {
+        if (_a == 1) {
+            return String.format("[1.0000x%sy%s = 0]", _formatCoefficient(_b), _formatCoefficient(_c));
+        } else {
+            return String.format("[1.0000y%s = 0]", _formatCoefficient(_c));
+        }
     }
 }
