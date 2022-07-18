@@ -209,6 +209,7 @@ public class PolygonTest {
         }
         Polygon poly = new Polygon(vertices), poly_new = (Polygon) poly.clone();
         assertEquals(4, poly_new.size());
+        assertEquals(poly, poly_new);
     }
 
     @Test

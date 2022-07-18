@@ -10,6 +10,13 @@ import chr1sps.PMath.exceptions.InvalidCoefficientsException;
 public class Line implements Cloneable {
     private double _a, _b, _c;
 
+    private void _correctMinusZeroes() {
+        if (_b == -0)
+            _b = 0;
+        if (_c == -0)
+            _c = 0;
+    }
+
     private void _initiateLine(Point a, Point b) {
         double delta_x = a.getX() - b.getX(), delta_y = a.getY() - b.getY();
         if (delta_x == 0) {
@@ -25,6 +32,7 @@ public class Line implements Cloneable {
             _b = -(delta_x / delta_y);
             _c = -a.getX() + a.getY() * (delta_x / delta_y);
         }
+        _correctMinusZeroes();
     }
 
     public Line(double A, double B, double C) throws InvalidCoefficientsException {
@@ -43,7 +51,7 @@ public class Line implements Cloneable {
             _b = B / A;
             _c = C / A;
         }
-
+        _correctMinusZeroes();
     }
 
     public Line(Point a, Point b) throws IdenticalPointsException {
@@ -62,8 +70,12 @@ public class Line implements Cloneable {
         _c = other._c;
     }
 
+    private boolean isZeroWithinError(double d, double error) {
+        return d <= error && d >= -error;
+    }
+
     public boolean isAdherent(Point point) {
-        return _a * point.getX() + _b * point.getY() + _c == 0;
+        return isZeroWithinError(_a * point.getX() + _b * point.getY() + _c, 1E-15);
     }
 
     public boolean isAdherent(Segment segment) {
@@ -97,13 +109,13 @@ public class Line implements Cloneable {
         return true;
     }
 
-    private String _formatCoefficient(double d) {
+    private String _formatCoefficient(double d, String s) {
         if (d == 0)
             return "";
         else if (d < 0)
-            return String.format(" - %.4f", -d);
+            return String.format(" - %.4f%s", -d, s);
         else
-            return String.format(" + %.4f", d);
+            return String.format(" + %.4f%s", d, s);
     }
 
     public Object clone() throws CloneNotSupportedException {
@@ -116,9 +128,9 @@ public class Line implements Cloneable {
 
     public String toString() {
         if (_a == 1) {
-            return String.format("[1.0000x%sy%s = 0]", _formatCoefficient(_b), _formatCoefficient(_c));
+            return String.format("[1.0000x%s%s = 0]", _formatCoefficient(_b, "y"), _formatCoefficient(_c, ""));
         } else {
-            return String.format("[1.0000y%s = 0]", _formatCoefficient(_c));
+            return String.format("[1.0000y%s = 0]", _formatCoefficient(_c, ""));
         }
     }
 }
