@@ -1,9 +1,14 @@
-import org.junit.*;
-import PMath.shapes.Point;
-import PMath.shapes.Segment;
-import PMath.exceptions.*;
+package chr1sps.PMath;
 
-public class SegmentTests {
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
+import chr1sps.PMath.exceptions.IdenticalVerticesException;
+import chr1sps.PMath.shapes.Point;
+import chr1sps.PMath.shapes.Segment;
+
+public class SegmentTest {
     private static Point a1, a2, a3, b1, b2, b3, zero, floating;
 
     @BeforeClass

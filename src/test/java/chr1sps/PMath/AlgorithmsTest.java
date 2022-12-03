@@ -1,11 +1,15 @@
-import org.junit.*;
+package chr1sps.PMath;
 
-import PMath.shapes.Point;
-import PMath.shapes.Segment;
-import PMath.utils.algorithms;
-import PMath.exceptions.OriginPointException;
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
-public class AlgorithmsTests {
+import chr1sps.PMath.exceptions.OriginPointException;
+import chr1sps.PMath.shapes.Point;
+import chr1sps.PMath.shapes.Segment;
+import chr1sps.PMath.utils.algorithms;
+
+public class AlgorithmsTest {
     private static Point zero, a1, a2, a3, b1, b2, b3;
 
     @BeforeClass

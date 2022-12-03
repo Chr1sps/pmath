@@ -1,4 +1,4 @@
-package PMath.shapes;
+package chr1sps.PMath.shapes;
 
 /**
  * This class serves as a way to represent a point on a Euclidian plane. A point

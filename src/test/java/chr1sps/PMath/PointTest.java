@@ -1,8 +1,11 @@
-import org.junit.*;
+package chr1sps.PMath;
 
-import PMath.shapes.Point;
+import org.junit.Assert;
+import org.junit.Test;
 
-public class PointTests {
+import chr1sps.PMath.shapes.Point;
+
+public class PointTest {
 
     @Test
     public void testConstructor() {

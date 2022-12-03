@@ -1,10 +1,20 @@
+package chr1sps.PMath;
+
 import java.util.ArrayList;
-import org.junit.*;
 
-import PMath.shapes.*;
-import PMath.exceptions.*;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
-public class PolygonTests {
+import chr1sps.PMath.exceptions.ColinearVerticesException;
+import chr1sps.PMath.exceptions.InsufficientVerticesException;
+import chr1sps.PMath.exceptions.IntersectingEdgesException;
+import chr1sps.PMath.shapes.Point;
+import chr1sps.PMath.shapes.Polygon;
+import chr1sps.PMath.shapes.Segment;
+
+public class PolygonTest {
     private static Point point_1, point_2, point_3, point_4, point_5, point_6, point_7;
     private static ArrayList<Point> vertices;
 
@@ -17,7 +27,11 @@ public class PolygonTests {
         point_5 = new Point(0.5, 0.5);
         point_6 = new Point(0.25, 0.25);
         point_7 = new Point(0.5, 0.25);
-        vertices = new ArrayList<Point>();
+    }
+
+    @Before
+    public void clearVertices() {
+        vertices = new ArrayList<Point>(0);
     }
 
     @Test

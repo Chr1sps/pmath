@@ -1,14 +1,14 @@
-package PMath.shapes;
+package chr1sps.PMath.shapes;
 
 import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Map;
 
-import PMath.exceptions.ColinearVerticesException;
-import PMath.exceptions.IdenticalVerticesException;
-import PMath.exceptions.InsufficientVerticesException;
-import PMath.exceptions.IntersectingEdgesException;
-import PMath.utils.algorithms;
+import chr1sps.PMath.exceptions.ColinearVerticesException;
+import chr1sps.PMath.exceptions.IdenticalVerticesException;
+import chr1sps.PMath.exceptions.InsufficientVerticesException;
+import chr1sps.PMath.exceptions.IntersectingEdgesException;
+import chr1sps.PMath.utils.algorithms;
 
 /**
  * This class serves as a way to represent a polygon on a Euclidian plane. A

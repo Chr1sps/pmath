@@ -1,10 +1,10 @@
-package PMath.utils.comparators;
+package chr1sps.PMath.utils.comparators;
 
 import java.util.Comparator;
 
-import PMath.exceptions.OriginPointException;
-import PMath.shapes.Point;
-import PMath.utils.algorithms;
+import chr1sps.PMath.exceptions.OriginPointException;
+import chr1sps.PMath.shapes.Point;
+import chr1sps.PMath.utils.algorithms;
 
 public class CompPolar implements Comparator<Point> {
     @Override

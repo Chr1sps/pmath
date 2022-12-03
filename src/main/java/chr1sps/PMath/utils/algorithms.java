@@ -1,9 +1,9 @@
-package PMath.utils;
+package chr1sps.PMath.utils;
 
-import PMath.exceptions.IdenticalVerticesException;
-import PMath.exceptions.OriginPointException;
-import PMath.shapes.Point;
-import PMath.shapes.Segment;
+import chr1sps.PMath.exceptions.IdenticalVerticesException;
+import chr1sps.PMath.exceptions.OriginPointException;
+import chr1sps.PMath.shapes.Point;
+import chr1sps.PMath.shapes.Segment;
 
 public class algorithms {
 

@@ -1,7 +1,7 @@
-package PMath.shapes;
+package chr1sps.PMath.shapes;
 
-import PMath.exceptions.IdenticalVerticesException;
-import PMath.utils.algorithms;
+import chr1sps.PMath.exceptions.IdenticalVerticesException;
+import chr1sps.PMath.utils.algorithms;
 
 /**
  * This class serves as a way to represent a segment. A segment is defined by

@@ -6,3 +6,12 @@ bin/
 
 # main method file
 src/Main.java
+
+# vscode files
+.vscode
+
+# intellij files
+.idea
+
+# maven stuff
+target/
