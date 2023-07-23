@@ -67,8 +67,7 @@ public class Segment implements Cloneable {
      */
     public double getLength() {
         double delta_x = _b.getX() - _a.getX(), delta_y = _b.getY() - _a.getY();
-        double result = Math.sqrt(delta_x * delta_x + delta_y * delta_y);
-        return result;
+        return Math.sqrt(delta_x * delta_x + delta_y * delta_y);
     }
 
     /**
@@ -80,11 +79,9 @@ public class Segment implements Cloneable {
     public boolean isAdherent(Point point) {
         if (determinant(point, this) == 0.0) {
             if (_b.getX() - _a.getX() == 0.0) {
-                if (point.getY() >= Math.min(_a.getY(), _b.getY()) && point.getY() <= Math.max(_a.getY(), _b.getY()))
-                    return true;
+                return point.getY() >= Math.min(_a.getY(), _b.getY()) && point.getY() <= Math.max(_a.getY(), _b.getY());
             } else {
-                if (point.getX() >= Math.min(_a.getX(), _b.getX()) && point.getX() <= Math.max(_a.getX(), _b.getX()))
-                    return true;
+                return point.getX() >= Math.min(_a.getX(), _b.getX()) && point.getX() <= Math.max(_a.getX(), _b.getX());
             }
         }
         return false;
@@ -112,15 +109,12 @@ public class Segment implements Cloneable {
         if (det_1 < 0 && det_2 < 0)
             return true;
         else if (det_1 == 0 && det_2 < 0) {
-            if (other.isAdherent(_a) || other.isAdherent(_b))
-                return true;
+            return other.isAdherent(_a) || other.isAdherent(_b);
         } else if (det_1 < 0 && det_2 == 0) {
-            if (isAdherent(other._a) || isAdherent(other._b))
-                return true;
+            return isAdherent(other._a) || isAdherent(other._b);
         } else if (det_1 == 0 && det_2 == 0) {
-            if ((other.isAdherent(_a) || other.isAdherent(_b))
-                    && (isAdherent(other._a) || isAdherent(other._b)))
-                return true;
+            return (other.isAdherent(_a) || other.isAdherent(_b))
+                    && (isAdherent(other._a) || isAdherent(other._b));
         }
         return false;
     }

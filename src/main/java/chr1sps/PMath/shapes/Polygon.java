@@ -33,14 +33,17 @@ public class Polygon implements Cloneable {
      * This method is used to manipulate the input vertex array in order to get an
      * unambiguous representation of a polygon in an ArrayList object that is then
      * passed to the _vertices ArrayList.
-     * 
+     *
      * @param list array of {@link Point}s to assign
-     * @throws CloneNotSupportedException
      */
-    private void _shiftReverseAndAssign(Point[] list) throws CloneNotSupportedException {
-        _vertices = new ArrayList<Point>();
-        for (Point vertex : list) {
-            _vertices.add((Point) vertex.clone());
+    private void _shiftReverseAndAssign(Point[] list) {
+        _vertices = new ArrayList<>();
+        try {
+            for (Point vertex : list) {
+                _vertices.add((Point) vertex.clone());
+            }
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException();
         }
         Point smallest = _vertices.get(0), temp;
 
@@ -61,7 +64,7 @@ public class Polygon implements Cloneable {
         // one to set up the order in the _vertices arraylist
         Point adj_1 = _vertices.get(1), adj_2 = _vertices.get(_vertices.size() - 1);
         if (determinant(adj_1, _vertices.get(0), adj_2) > 0) {
-            ArrayList<Point> temp_list = new ArrayList<Point>();
+            ArrayList<Point> temp_list = new ArrayList<>();
             while (_vertices.size() != 1) {
                 temp_list.add(_vertices.remove(_vertices.size() - 1));
             }
@@ -72,43 +75,45 @@ public class Polygon implements Cloneable {
     /**
      * This method can ONLY be used by convex polygons. Checks if a given point is
      * inside of a convex polygon.
-     * 
+     *
      * @param point
      * @return boolean
-     * @throws IdenticalPointsException
      */
-    private boolean _isInsideConvex(Point point) throws IdenticalPointsException {
+    private boolean _isInsideConvex(Point point) {
         int p = 0, k = _vertices.size() - 2, s = k / 2;
         for (; k - p != 1; s = (k + p) / 2) {
             if (determinant(_vertices.get(_vertices.size() - 1), _vertices.get(s), point)
                     * determinant(
-                            _vertices.get(_vertices.size() - 1), _vertices.get(s),
-                            _vertices.get(_vertices.size() - 2)) > 0)
+                    _vertices.get(_vertices.size() - 1), _vertices.get(s),
+                    _vertices.get(_vertices.size() - 2)) > 0)
                 p = s;
             else
                 k = s;
         }
-        Segment[] sides = { new Segment(_vertices.get(_vertices.size() - 1), _vertices.get(p)),
-                new Segment(_vertices.get(p), _vertices.get(k)),
-                new Segment(_vertices.get(k), _vertices.get(_vertices.size() - 1)) };
-        int sum_det = 0;
-        for (Segment side : sides) {
-            if (side.isAdherent(point))
-                return true;
-            else if ((determinant(point, side)) > 0)
-                ++sum_det;
-            else
-                --sum_det;
+
+        try {
+            Segment[] sides = {new Segment(_vertices.get(_vertices.size() - 1), _vertices.get(p)),
+                    new Segment(_vertices.get(p), _vertices.get(k)),
+                    new Segment(_vertices.get(k), _vertices.get(_vertices.size() - 1))};
+            int sum_det = 0;
+            for (Segment side : sides) {
+                if (side.isAdherent(point))
+                    return true;
+                else if ((determinant(point, side)) > 0)
+                    ++sum_det;
+                else
+                    --sum_det;
+            }
+            return sum_det == 3 || sum_det == -3;
+        } catch (IdenticalPointsException e) {
+            throw new RuntimeException();
         }
-        return sum_det == 3 || sum_det == -3;
     }
 
     public Polygon(Point[] vertices)
             throws InsufficientVerticesException,
             ColinearVerticesException,
-            IdenticalPointsException,
-            IntersectingEdgesException,
-            CloneNotSupportedException {
+            IntersectingEdgesException {
 
         // checking if there are 3 or more vertices
         if (vertices.length < 3) {
@@ -128,15 +133,19 @@ public class Polygon implements Cloneable {
 
         // creating a list of sides
         prev = vertices[vertices.length - 1];
-        ArrayList<Segment> sides = new ArrayList<Segment>();
-        for (int i = 0; i < vertices.length; ++i) {
-            sides.add(new Segment(prev, vertices[i]));
-            prev = vertices[i];
+        ArrayList<Segment> sides = new ArrayList<>();
+        try {
+            for (Point vertex : vertices) {
+                sides.add(new Segment(prev, vertex));
+                prev = vertex;
+            }
+        } catch (IdenticalPointsException e) {
+            throw new RuntimeException();
         }
 
         // the actual checking part
         // total amount of checks == ((n-3)*n)/2 for n >=3 vertices
-        for (int i = 0, offset = 0; i < sides.size() - 2; ++i) {
+        for (int i = 0, offset; i < sides.size() - 2; ++i) {
 
             if (i == 0)
                 offset = 1;
@@ -157,10 +166,8 @@ public class Polygon implements Cloneable {
     public Polygon(ArrayList<Point> vertices)
             throws InsufficientVerticesException,
             ColinearVerticesException,
-            IdenticalPointsException,
-            IntersectingEdgesException,
-            CloneNotSupportedException {
-        this((Point[]) vertices.toArray(new Point[0]));
+            IntersectingEdgesException {
+        this(vertices.toArray(new Point[0]));
 
     }
 
@@ -171,7 +178,7 @@ public class Polygon implements Cloneable {
 
     /**
      * Returns the amount of vertices in the polygon.
-     * 
+     *
      * @return int
      */
     public int size() {
@@ -180,11 +187,11 @@ public class Polygon implements Cloneable {
 
     /**
      * Returns a deep copy of the ArrayList containing all the vertices.
-     * 
+     *
      * @return ArrayList<Point>
      */
     public ArrayList<Point> getVertices() {
-        ArrayList<Point> result = new ArrayList<Point>();
+        ArrayList<Point> result = new ArrayList<>();
         for (Point vertex : _vertices) {
             result.add(new Point(vertex));
         }
@@ -197,15 +204,18 @@ public class Polygon implements Cloneable {
      * starts from the {@link Segment} with vertices numbered [size - 1, 0]
      * (ordering from
      * 0)).
-     * 
+     *
      * @return ArrayList<Segment>
-     * @throws IdenticalPointsException
      */
-    public ArrayList<Segment> getSides() throws IdenticalPointsException {
+    public ArrayList<Segment> getSides() {
         Point prev = _vertices.get(_vertices.size() - 1);
-        ArrayList<Segment> sides = new ArrayList<Segment>();
+        ArrayList<Segment> sides = new ArrayList<>();
         for (Point vertex : _vertices) {
-            sides.add(new Segment(new Point(prev), new Point(vertex)));
+            try {
+                sides.add(new Segment(new Point(prev), new Point(vertex)));
+            } catch (IdenticalPointsException e) {
+                throw new RuntimeException();
+            }
             prev = vertex;
         }
         return sides;
@@ -213,11 +223,10 @@ public class Polygon implements Cloneable {
 
     /**
      * Returns a polygon's circumference.
-     * 
+     *
      * @return double
-     * @throws IdenticalPointsException
      */
-    public double getCircumference() throws IdenticalPointsException {
+    public double getCircumference() {
         double result = 0;
         for (Segment seg : getSides()) {
             result += seg.getLength();
@@ -227,18 +236,14 @@ public class Polygon implements Cloneable {
 
     /**
      * Returns true if a polygon is concave.
-     * 
+     *
      * @return boolean
      */
     public boolean isConcave() {
         if (_vertices.size() > 3) {
             Point pprev = new Point(_vertices.get(_vertices.size() - 2)),
                     prev = new Point(_vertices.get(_vertices.size() - 1));
-            boolean more_than;
-            if (determinant(_vertices.get(0), prev, pprev) > 0)
-                more_than = true;
-            else
-                more_than = false;
+            boolean more_than = determinant(_vertices.get(0), prev, pprev) > 0;
             for (int i = 1; i < _vertices.size(); ++i) {
                 if (determinant(_vertices.get(i), prev, pprev) < 0 == more_than)
                     return true;
@@ -252,31 +257,33 @@ public class Polygon implements Cloneable {
 
     /**
      * Checks if a given {@link Point} is inside of a polygon.
-     * 
+     *
      * @param point
      * @return boolean
-     * @throws IdenticalPointsException
-     * @throws InsufficientVerticesException
-     * @throws ColinearVerticesException
-     * @throws IntersectingEdgesException
-     * @throws CloneNotSupportedException
      */
     @SuppressWarnings("unchecked")
-    public boolean isInside(Point point) throws IdenticalPointsException, InsufficientVerticesException,
-            ColinearVerticesException, IntersectingEdgesException, CloneNotSupportedException {
-        ArrayList<Point> vertices_copy = (ArrayList<Point>) _vertices.clone(), stack = new ArrayList<Point>(),
-                empty_space = new ArrayList<Point>();
-        Point pivot = (Point) vertices_copy.get(0).clone();
-        vertices_copy.remove(0);
+    public boolean isInside(Point point) {
+        ArrayList<Point> vertices_copy = (ArrayList<Point>) _vertices.clone(), stack = new ArrayList<>(),
+                empty_space = new ArrayList<>();
+        try {
+            Point pivot = (Point) vertices_copy.get(0).clone();
+            vertices_copy.remove(0);
 
-        stack.add(pivot);
+            stack.add(pivot);
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException();
+        }
         boolean concave = false;
         // hull part
         for (Point vertex : vertices_copy) {
 
             // checking if a point belongs to an edge
-            if (new Segment(stack.get(stack.size() - 1), vertex).isAdherent(point))
-                return true;
+            try {
+                if (new Segment(stack.get(stack.size() - 1), vertex).isAdherent(point))
+                    return true;
+            } catch (IdenticalPointsException e) {
+                throw new RuntimeException();
+            }
 
             // if stack has >1 point on it and the determinant is < 0 then create a list of
             // vertices that define the empty space
@@ -294,8 +301,12 @@ public class Polygon implements Cloneable {
             if (concave) {
                 empty_space.add(stack.get(stack.size() - 1));
                 concave = false;
-                if (new Polygon(empty_space).isInside(point))
-                    return false;
+                try {
+                    if (new Polygon(empty_space).isInside(point))
+                        return false;
+                } catch (InsufficientVerticesException | ColinearVerticesException | IntersectingEdgesException e) {
+                    throw new RuntimeException();
+                }
                 empty_space.clear();
             }
 
@@ -305,13 +316,17 @@ public class Polygon implements Cloneable {
 
         // resulting polygon in the stack is a convex hull, therefore we can use a
         // normal algorithm used for convex polygons
-        return new Polygon(stack)._isInsideConvex(point);
+        try {
+            return new Polygon(stack)._isInsideConvex(point);
+        } catch (InsufficientVerticesException | ColinearVerticesException | IntersectingEdgesException e) {
+            throw new RuntimeException();
+        }
     }
 
     /**
      * Returns a pair of {@link Point}s signifying the span of coordinate values on
      * which a polygon is located.
-     * 
+     *
      * @return Entry<Point, Point>
      */
     public Map.Entry<Point, Point> getSpan() {
@@ -326,8 +341,7 @@ public class Polygon implements Cloneable {
             if (point.getY() > max.getY())
                 max.setY(point.getY());
         }
-        Map.Entry<Point, Point> pair = new AbstractMap.SimpleImmutableEntry<>(min, max);
-        return pair;
+        return new AbstractMap.SimpleImmutableEntry<>(min, max);
     }
 
     /**
@@ -367,21 +381,19 @@ public class Polygon implements Cloneable {
         if (getClass() != obj.getClass())
             return false;
         Polygon other = (Polygon) obj;
-        if (_vertices.equals(other._vertices))
-            return true;
-        return false;
+        return _vertices.equals(other._vertices);
     }
 
     /**
      * Returns a string containing data about the polygon. Example result:
-     * 
+     *
      * <pre>
      * "0: (0.0000, 0.0000)
      * 1: (0.0000, 1.0000)
      * 2: (1.0000, 1.0000)
      * 3: (1.0000, 0.0000)"
      * </pre>
-     * 
+     *
      * @return String
      */
     public String toString() {

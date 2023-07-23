@@ -53,10 +53,10 @@ public class Point implements Cloneable {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        Double temp = _x;
-        result = prime * result + temp.hashCode();
+        double temp = _x;
+        result = prime * result + Double.hashCode(temp);
         temp = _y;
-        result = prime * result + temp.hashCode();
+        result = prime * result + Double.hashCode(temp);
         return result;
     }
 
